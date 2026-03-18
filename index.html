@@ -6,19 +6,13 @@
     <meta name="description" content="50+ format destekli ücretsiz medya dönüştürücü">
     <meta name="theme-color" content="#020617">
     
-    <!-- Cross-Origin Headers for SharedArrayBuffer -->
-    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
-    <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
-    
     <title>Media Morph Beast | 50+ Formats</title>
     
-    <!-- Preconnect for faster loading -->
     <link rel="preconnect" href="https://unpkg.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* ===== CSS VARIABLES ===== */
         :root {
             --bg: #020617;
             --card: #0f172a;
@@ -33,30 +27,20 @@
             --text-dim: #64748b;
             --border: rgba(255,255,255,0.08);
             --shadow: rgba(0,0,0,0.4);
-            
-            /* Spacing */
             --space-xs: 0.25rem;
             --space-sm: 0.5rem;
             --space-md: 1rem;
             --space-lg: 1.5rem;
             --space-xl: 2rem;
-            
-            /* Border Radius */
             --radius-sm: 0.75rem;
             --radius-md: 1rem;
             --radius-lg: 1.5rem;
             --radius-xl: 2rem;
-            
-            /* Transitions */
             --transition-fast: 150ms ease;
             --transition-normal: 250ms ease;
-            --transition-slow: 350ms ease;
-            
-            /* Touch Target */
             --touch-target: 44px;
         }
 
-        /* ===== RESET & BASE ===== */
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
@@ -66,11 +50,10 @@
         html {
             font-size: 16px;
             -webkit-text-size-adjust: 100%;
-            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
@@ -81,16 +64,13 @@
             justify-content: center;
             padding: var(--space-md);
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* ===== FOCUS STYLES ===== */
         :focus-visible {
             outline: 2px solid var(--accent);
             outline-offset: 2px;
         }
 
-        /* ===== CONTAINER ===== */
         .container {
             background: var(--card);
             width: 100%;
@@ -113,7 +93,6 @@
             background: linear-gradient(90deg, var(--accent), var(--success));
         }
 
-        /* ===== HEADER ===== */
         .header {
             text-align: center;
             margin-bottom: var(--space-lg);
@@ -137,7 +116,6 @@
             text-transform: uppercase;
         }
 
-        /* ===== STATUS BANNER ===== */
         .status-banner {
             display: flex;
             align-items: center;
@@ -159,22 +137,14 @@
             animation: pulse 2s infinite;
         }
 
-        .status-dot.ready {
-            background: var(--success);
-            animation: none;
-        }
-
-        .status-dot.error {
-            background: var(--error);
-            animation: none;
-        }
+        .status-dot.ready { background: var(--success); animation: none; }
+        .status-dot.error { background: var(--error); animation: none; }
 
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(0.8); }
         }
 
-        /* ===== FILE DROP ZONE ===== */
         .file-zone {
             border: 2px dashed var(--border);
             padding: var(--space-xl) var(--space-md);
@@ -184,11 +154,9 @@
             text-align: center;
             background: rgba(30, 41, 59, 0.3);
             min-height: var(--touch-target);
-            position: relative;
         }
 
         .file-zone:hover,
-        .file-zone:focus-within,
         .file-zone.drag-over {
             border-color: var(--accent);
             background: rgba(59, 130, 246, 0.08);
@@ -200,22 +168,9 @@
             border-style: solid;
         }
 
-        .file-icon {
-            font-size: 2.5rem;
-            margin-bottom: var(--space-sm);
-            display: block;
-        }
-
-        .file-text {
-            font-weight: 700;
-            font-size: 0.95rem;
-            margin-bottom: var(--space-xs);
-        }
-
-        .file-hint {
-            font-size: 0.7rem;
-            color: var(--text-dim);
-        }
+        .file-icon { font-size: 2.5rem; margin-bottom: var(--space-sm); display: block; }
+        .file-text { font-weight: 700; font-size: 0.95rem; margin-bottom: var(--space-xs); }
+        .file-hint { font-size: 0.7rem; color: var(--text-dim); }
 
         .file-count {
             display: inline-flex;
@@ -230,7 +185,6 @@
             margin-top: var(--space-sm);
         }
 
-        /* ===== CONFIG SECTION ===== */
         .config-section {
             display: grid;
             gap: var(--space-md);
@@ -238,9 +192,7 @@
         }
 
         @media (min-width: 400px) {
-            .config-section {
-                grid-template-columns: 1fr 1fr;
-            }
+            .config-section { grid-template-columns: 1fr 1fr; }
         }
 
         .input-group {
@@ -251,13 +203,8 @@
             transition: var(--transition-fast);
         }
 
-        .input-group:focus-within {
-            border-color: var(--accent);
-        }
-
-        .input-group.full-width {
-            grid-column: 1 / -1;
-        }
+        .input-group:focus-within { border-color: var(--accent); }
+        .input-group.full-width { grid-column: 1 / -1; }
 
         .input-label {
             display: flex;
@@ -271,14 +218,7 @@
             margin-bottom: var(--space-sm);
         }
 
-        .input-label .icon {
-            font-size: 0.8rem;
-        }
-
-        /* ===== SELECT STYLES ===== */
-        .select-wrapper {
-            position: relative;
-        }
+        .select-wrapper { position: relative; }
 
         .select-wrapper::after {
             content: '▼';
@@ -306,22 +246,10 @@
             font-family: inherit;
         }
 
-        select:focus {
-            outline: none;
-        }
+        select:focus { outline: none; }
+        option, optgroup { background: var(--card); color: var(--text); }
+        optgroup { font-weight: 800; color: var(--accent); }
 
-        option, optgroup {
-            background: var(--card);
-            color: var(--text);
-            padding: var(--space-sm);
-        }
-
-        optgroup {
-            font-weight: 800;
-            color: var(--accent);
-        }
-
-        /* ===== BUTTONS ===== */
         .btn {
             display: flex;
             align-items: center;
@@ -347,23 +275,11 @@
         .btn:hover:not(:disabled) {
             background: var(--accent-hover);
             transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
         }
 
-        .btn:active:not(:disabled) {
-            transform: translateY(0);
-        }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn.loading {
-            position: relative;
-            color: transparent;
-        }
+        .btn.loading { position: relative; color: transparent; }
 
         .btn.loading::after {
             content: '';
@@ -376,36 +292,16 @@
             animation: spin 0.8s linear infinite;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ===== QUEUE ===== */
         .queue-container {
             margin-top: var(--space-lg);
             max-height: 300px;
             overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent) var(--card-hover);
-        }
-
-        .queue-container::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .queue-container::-webkit-scrollbar-track {
-            background: var(--card-hover);
-            border-radius: 3px;
-        }
-
-        .queue-container::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 3px;
         }
 
         .queue-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
             margin-bottom: var(--space-sm);
             font-size: 0.75rem;
@@ -419,38 +315,20 @@
             border-radius: var(--radius-md);
             margin-bottom: var(--space-sm);
             border-left: 3px solid var(--accent);
-            transition: var(--transition-fast);
             animation: slideIn 0.3s ease;
         }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
-        .queue-item.processing {
-            border-left-color: var(--warning);
-            background: rgba(245, 158, 11, 0.1);
-        }
-
-        .queue-item.completed {
-            border-left-color: var(--success);
-        }
-
-        .queue-item.error {
-            border-left-color: var(--error);
-            background: rgba(239, 68, 68, 0.1);
-        }
+        .queue-item.processing { border-left-color: var(--warning); background: rgba(245, 158, 11, 0.1); }
+        .queue-item.completed { border-left-color: var(--success); }
+        .queue-item.error { border-left-color: var(--error); background: rgba(239, 68, 68, 0.1); }
 
         .queue-item-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
             margin-bottom: var(--space-sm);
         }
@@ -475,21 +353,10 @@
             background: var(--accent);
         }
 
-        .queue-item-status.waiting {
-            background: var(--text-dim);
-        }
-
-        .queue-item-status.processing {
-            background: var(--warning);
-        }
-
-        .queue-item-status.completed {
-            background: var(--success);
-        }
-
-        .queue-item-status.error {
-            background: var(--error);
-        }
+        .queue-item-status.waiting { background: var(--text-dim); }
+        .queue-item-status.processing { background: var(--warning); }
+        .queue-item-status.completed { background: var(--success); }
+        .queue-item-status.error { background: var(--error); }
 
         .queue-item-info {
             display: flex;
@@ -499,7 +366,6 @@
             margin-bottom: var(--space-sm);
         }
 
-        /* Progress Bar */
         .progress-bar {
             width: 100%;
             height: 6px;
@@ -512,15 +378,11 @@
             height: 100%;
             width: 0%;
             background: linear-gradient(90deg, var(--accent), var(--success));
-            border-radius: 3px;
             transition: width 0.3s ease;
         }
 
-        .progress-fill.error {
-            background: var(--error);
-        }
+        .progress-fill.error { background: var(--error); }
 
-        /* ===== FOOTER ===== */
         .footer {
             margin-top: var(--space-lg);
             padding-top: var(--space-md);
@@ -528,10 +390,7 @@
             text-align: center;
         }
 
-        .footer-text {
-            font-size: 0.65rem;
-            color: var(--text-dim);
-        }
+        .footer-text { font-size: 0.65rem; color: var(--text-dim); }
 
         .footer-features {
             display: flex;
@@ -542,9 +401,6 @@
         }
 
         .feature-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
             font-size: 0.6rem;
             background: rgba(59, 130, 246, 0.1);
             color: var(--accent);
@@ -553,7 +409,6 @@
             font-weight: 600;
         }
 
-        /* ===== NOTIFICATIONS ===== */
         .notification {
             position: fixed;
             bottom: 20px;
@@ -573,30 +428,14 @@
         }
 
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .notification.success {
-            background: var(--success);
-            color: white;
-        }
-
-        .notification.error {
-            background: var(--error);
-            color: white;
-        }
-
-        .notification.warning {
-            background: var(--warning);
-            color: black;
-        }
+        .notification.success { background: var(--success); color: white; }
+        .notification.error { background: var(--error); color: white; }
+        .notification.warning { background: var(--warning); color: black; }
+        .notification.info { background: var(--accent); color: white; }
 
         .notification-close {
             margin-left: auto;
@@ -609,121 +448,6 @@
             opacity: 0.7;
         }
 
-        .notification-close:hover {
-            opacity: 1;
-        }
-
-        /* ===== ERROR MODAL ===== */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: var(--space-md);
-            z-index: 1000;
-            animation: fadeIn 0.2s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal {
-            background: var(--card);
-            padding: var(--space-xl);
-            border-radius: var(--radius-lg);
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            animation: scaleIn 0.3s ease;
-        }
-
-        @keyframes scaleIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .modal-icon {
-            font-size: 3rem;
-            margin-bottom: var(--space-md);
-        }
-
-        .modal-title {
-            font-size: 1.2rem;
-            font-weight: 800;
-            margin-bottom: var(--space-sm);
-        }
-
-        .modal-text {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: var(--space-lg);
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 480px) {
-            body {
-                padding: var(--space-sm);
-            }
-
-            .container {
-                padding: var(--space-md);
-                border-radius: var(--radius-lg);
-            }
-
-            .file-zone {
-                padding: var(--space-lg) var(--space-md);
-            }
-
-            .btn {
-                padding: var(--space-md);
-            }
-        }
-
-        @media (min-width: 768px) {
-            .container {
-                padding: var(--space-xl);
-            }
-        }
-
-        /* ===== REDUCED MOTION ===== */
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        /* ===== HIGH CONTRAST ===== */
-        @media (prefers-contrast: high) {
-            :root {
-                --border: rgba(255,255,255,0.3);
-            }
-
-            .queue-item,
-            .input-group {
-                border-width: 2px;
-            }
-        }
-
-        /* ===== PRINT ===== */
-        @media print {
-            body {
-                background: white;
-                color: black;
-            }
-
-            .container {
-                box-shadow: none;
-                border: 1px solid #ccc;
-            }
-        }
-
-        /* ===== HIDDEN ===== */
         .sr-only {
             position: absolute;
             width: 1px;
@@ -732,149 +456,95 @@
             margin: -1px;
             overflow: hidden;
             clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
             border: 0;
         }
 
-        [hidden] {
-            display: none !important;
+        [hidden] { display: none !important; }
+
+        @media (max-width: 480px) {
+            body { padding: var(--space-sm); }
+            .container { padding: var(--space-md); border-radius: var(--radius-lg); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
 <body>
-    <main class="container" role="main" aria-labelledby="app-title">
-        <!-- Header -->
+    <main class="container" role="main">
         <header class="header">
-            <h1 id="app-title" class="logo">Media Morph Beast</h1>
-            <p class="tagline">50+ Formats • Batch Processing • Offline Ready</p>
+            <h1 class="logo">Media Morph Beast</h1>
+            <p class="tagline">50+ Formats • Batch Processing • Browser-Based</p>
         </header>
 
-        <!-- Status Banner -->
         <div class="status-banner" role="status" aria-live="polite">
             <span class="status-dot" id="statusDot"></span>
             <span id="statusText">FFmpeg yükleniyor...</span>
         </div>
 
-        <!-- File Upload Zone -->
-        <div 
-            class="file-zone" 
-            id="fileZone"
-            role="button"
-            tabindex="0"
-            aria-label="Dosya seçmek için tıklayın veya sürükleyip bırakın"
-            aria-describedby="fileHint"
-        >
-            <input 
-                type="file" 
-                id="fileInput" 
-                multiple 
-                accept="video/*,audio/*,image/*"
-                class="sr-only"
-                aria-label="Medya dosyaları seçin"
-            >
-            <span class="file-icon" aria-hidden="true">📁</span>
+        <div class="file-zone" id="fileZone" role="button" tabindex="0" aria-label="Dosya seçmek için tıklayın">
+            <input type="file" id="fileInput" multiple accept="video/*,audio/*,image/*" class="sr-only">
+            <span class="file-icon">📁</span>
             <p class="file-text" id="fileText">Dosyaları Seçin veya Sürükleyin</p>
-            <p class="file-hint" id="fileHint">Video, ses ve görsel formatları desteklenir</p>
+            <p class="file-hint">Video, ses ve görsel formatları desteklenir</p>
         </div>
 
-        <!-- Configuration -->
-        <section class="config-section" aria-label="Dönüştürme ayarları">
+        <section class="config-section">
             <div class="input-group">
                 <label class="input-label" for="targetFormat">
-                    <span class="icon" aria-hidden="true">🎯</span>
-                    Hedef Format
+                    <span>🎯</span> Hedef Format
                 </label>
                 <div class="select-wrapper">
-                    <select id="targetFormat" aria-describedby="formatHelp">
-                        <!-- VIDEO FORMATS -->
+                    <select id="targetFormat">
                         <optgroup label="🎬 Video - Popüler">
-                            <option value="mp4" data-type="video">MP4 (H.264 - Evrensel)</option>
-                            <option value="webm" data-type="video">WebM (VP9 - Web)</option>
-                            <option value="mkv" data-type="video">MKV (Matroska)</option>
-                            <option value="avi" data-type="video">AVI (Klasik)</option>
-                            <option value="mov" data-type="video">MOV (Apple)</option>
+                            <option value="mp4" data-type="video">MP4 (H.264)</option>
+                            <option value="webm" data-type="video">WebM (VP9)</option>
+                            <option value="mkv" data-type="video">MKV</option>
+                            <option value="avi" data-type="video">AVI</option>
+                            <option value="mov" data-type="video">MOV</option>
                         </optgroup>
-                        
-                        <optgroup label="📱 Video - Mobil & Eski">
-                            <option value="3gp" data-type="video">3GP (Mobil)</option>
-                            <option value="3g2" data-type="video">3G2</option>
-                            <option value="m4v" data-type="video">M4V (iTunes)</option>
-                            <option value="flv" data-type="video">FLV (Flash)</option>
-                            <option value="ts" data-type="video">TS (Broadcast)</option>
-                            <option value="mts" data-type="video">MTS (AVCHD)</option>
-                            <option value="m2ts" data-type="video">M2TS (Blu-ray)</option>
+                        <optgroup label="📱 Video - Mobil">
+                            <option value="3gp" data-type="video">3GP</option>
+                            <option value="m4v" data-type="video">M4V</option>
+                            <option value="flv" data-type="video">FLV</option>
+                            <option value="ts" data-type="video">TS</option>
+                            <option value="m2ts" data-type="video">M2TS</option>
                         </optgroup>
-
                         <optgroup label="💿 Video - Arşiv">
-                            <option value="wmv" data-type="video">WMV (Windows)</option>
-                            <option value="asf" data-type="video">ASF</option>
-                            <option value="vob" data-type="video">VOB (DVD)</option>
-                            <option value="mpg" data-type="video">MPG (MPEG-1)</option>
-                            <option value="mpeg" data-type="video">MPEG-2</option>
-                            <option value="ogv" data-type="video">OGV (Theora)</option>
-                            <option value="rm" data-type="video">RM (RealMedia)</option>
-                            <option value="rmvb" data-type="video">RMVB</option>
-                            <option value="divx" data-type="video">DivX</option>
-                            <option value="xvid" data-type="video">Xvid</option>
+                            <option value="wmv" data-type="video">WMV</option>
+                            <option value="mpg" data-type="video">MPG</option>
+                            <option value="mpeg" data-type="video">MPEG</option>
+                            <option value="ogv" data-type="video">OGV</option>
+                            <option value="vob" data-type="video">VOB</option>
                         </optgroup>
-
-                        <optgroup label="🚀 Video - Profesyonel">
-                            <option value="prores" data-type="video">ProRes (Apple)</option>
-                            <option value="dnxhd" data-type="video">DNxHD (Avid)</option>
-                            <option value="huffyuv" data-type="video">HuffYUV (Lossless)</option>
-                            <option value="ffv1" data-type="video">FFV1 (Arşiv)</option>
-                        </optgroup>
-
-                        <!-- AUDIO FORMATS -->
                         <optgroup label="🎵 Ses - Popüler">
-                            <option value="mp3" data-type="audio">MP3 (Universal)</option>
-                            <option value="aac" data-type="audio">AAC (Modern)</option>
-                            <option value="m4a" data-type="audio">M4A (Apple)</option>
-                            <option value="ogg" data-type="audio">OGG Vorbis</option>
-                            <option value="opus" data-type="audio">Opus (Yüksek Verim)</option>
+                            <option value="mp3" data-type="audio">MP3</option>
+                            <option value="aac" data-type="audio">AAC</option>
+                            <option value="m4a" data-type="audio">M4A</option>
+                            <option value="ogg" data-type="audio">OGG</option>
+                            <option value="opus" data-type="audio">Opus</option>
                         </optgroup>
-
                         <optgroup label="🎧 Ses - Kayıpsız">
-                            <option value="wav" data-type="audio">WAV (Lossless)</option>
-                            <option value="flac" data-type="audio">FLAC (Hi-Fi)</option>
-                            <option value="alac" data-type="audio">ALAC (Apple Lossless)</option>
-                            <option value="aiff" data-type="audio">AIFF (Mac)</option>
-                            <option value="ape" data-type="audio">APE (Monkey's Audio)</option>
+                            <option value="wav" data-type="audio">WAV</option>
+                            <option value="flac" data-type="audio">FLAC</option>
+                            <option value="aiff" data-type="audio">AIFF</option>
                         </optgroup>
-
                         <optgroup label="📞 Ses - Diğer">
-                            <option value="wma" data-type="audio">WMA (Windows)</option>
-                            <option value="amr" data-type="audio">AMR (Ses Kaydı)</option>
-                            <option value="ac3" data-type="audio">AC3 (Dolby)</option>
-                            <option value="dts" data-type="audio">DTS</option>
-                            <option value="ra" data-type="audio">RA (RealAudio)</option>
-                            <option value="au" data-type="audio">AU (Sun)</option>
-                            <option value="gsm" data-type="audio">GSM</option>
-                            <option value="mka" data-type="audio">MKA (Matroska Audio)</option>
+                            <option value="wma" data-type="audio">WMA</option>
+                            <option value="amr" data-type="audio">AMR</option>
+                            <option value="ac3" data-type="audio">AC3</option>
                         </optgroup>
-
-                        <!-- IMAGE FORMATS -->
-                        <optgroup label="🖼️ Görsel - Web">
-                            <option value="jpg" data-type="image">JPG/JPEG</option>
-                            <option value="png" data-type="image">PNG (Şeffaf)</option>
-                            <option value="webp" data-type="image">WebP (Modern)</option>
-                            <option value="avif" data-type="image">AVIF (Yeni Nesil)</option>
-                            <option value="gif" data-type="image">GIF (Animasyon)</option>
-                        </optgroup>
-
-                        <optgroup label="🎨 Görsel - Profesyonel">
-                            <option value="tiff" data-type="image">TIFF</option>
+                        <optgroup label="🖼️ Görsel">
+                            <option value="jpg" data-type="image">JPG</option>
+                            <option value="png" data-type="image">PNG</option>
+                            <option value="webp" data-type="image">WebP</option>
+                            <option value="gif" data-type="image">GIF</option>
                             <option value="bmp" data-type="image">BMP</option>
-                            <option value="ico" data-type="image">ICO (İkon)</option>
-                            <option value="tga" data-type="image">TGA</option>
-                            <option value="ppm" data-type="image">PPM</option>
-                            <option value="pgm" data-type="image">PGM</option>
-                            <option value="pbm" data-type="image">PBM</option>
-                        </optgroup>
-
-                        <optgroup label="✨ Animasyon">
-                            <option value="apng" data-type="image">APNG</option>
-                            <option value="mjpeg" data-type="video">MJPEG</option>
+                            <option value="tiff" data-type="image">TIFF</option>
                         </optgroup>
                     </select>
                 </div>
@@ -882,47 +552,43 @@
 
             <div class="input-group">
                 <label class="input-label" for="qualityMode">
-                    <span class="icon" aria-hidden="true">⚡</span>
-                    Kalite Modu
+                    <span>⚡</span> Kalite
                 </label>
                 <div class="select-wrapper">
                     <select id="qualityMode">
                         <option value="balanced">⚖️ Dengeli</option>
-                        <option value="quality">💎 Maksimum Kalite</option>
-                        <option value="speed">🚀 Hızlı (Düşük Boyut)</option>
-                        <option value="tiny">📦 Minimum Boyut</option>
+                        <option value="quality">💎 Yüksek Kalite</option>
+                        <option value="speed">🚀 Hızlı</option>
+                        <option value="tiny">📦 Min. Boyut</option>
                     </select>
                 </div>
             </div>
 
-            <!-- Advanced Options (Collapsible) -->
             <details class="input-group full-width">
-                <summary style="cursor: pointer; font-weight: 700; font-size: 0.8rem; color: var(--text-muted);">
+                <summary style="cursor:pointer;font-weight:700;font-size:0.8rem;color:var(--text-muted);">
                     ⚙️ Gelişmiş Ayarlar
                 </summary>
-                <div style="margin-top: var(--space-md); display: grid; gap: var(--space-sm);">
+                <div style="margin-top:var(--space-md);display:grid;gap:var(--space-sm);">
                     <div>
                         <label class="input-label" for="resolution">Çözünürlük</label>
                         <div class="select-wrapper">
                             <select id="resolution">
                                 <option value="original">Orijinal</option>
-                                <option value="2160">4K (2160p)</option>
-                                <option value="1080">Full HD (1080p)</option>
-                                <option value="720">HD (720p)</option>
-                                <option value="480">SD (480p)</option>
-                                <option value="360">Düşük (360p)</option>
+                                <option value="1080">1080p</option>
+                                <option value="720">720p</option>
+                                <option value="480">480p</option>
+                                <option value="360">360p</option>
                             </select>
                         </div>
                     </div>
                     <div>
-                        <label class="input-label" for="audioQuality">Ses Kalitesi</label>
+                        <label class="input-label" for="audioQuality">Ses Bitrate</label>
                         <div class="select-wrapper">
                             <select id="audioQuality">
-                                <option value="320">320 kbps (En İyi)</option>
+                                <option value="320">320 kbps</option>
                                 <option value="256">256 kbps</option>
                                 <option value="192" selected>192 kbps</option>
                                 <option value="128">128 kbps</option>
-                                <option value="64">64 kbps (Düşük)</option>
                             </select>
                         </div>
                     </div>
@@ -930,49 +596,42 @@
             </details>
         </section>
 
-        <!-- Convert Button -->
-        <button 
-            type="button" 
-            class="btn" 
-            id="convertBtn"
-            disabled
-            aria-describedby="btnStatus"
-        >
-            <span class="btn-icon" aria-hidden="true">🚀</span>
+        <button type="button" class="btn" id="convertBtn" disabled>
+            <span>🚀</span>
             <span class="btn-text">DÖNÜŞTÜRMEYE BAŞLA</span>
         </button>
-        <span id="btnStatus" class="sr-only">Dosya seçilmedi</span>
 
-        <!-- Queue List -->
-        <section class="queue-container" id="queueContainer" hidden aria-label="Dönüştürme kuyruğu">
+        <section class="queue-container" id="queueContainer" hidden>
             <div class="queue-header">
                 <span>📋 İşlem Kuyruğu</span>
-                <span id="queueStats">0/0 tamamlandı</span>
+                <span id="queueStats">0/0</span>
             </div>
-            <div id="queueList" role="list" aria-live="polite"></div>
+            <div id="queueList" role="list"></div>
         </section>
 
-        <!-- Footer -->
         <footer class="footer">
-            <p class="footer-text">Tarayıcınızda çalışır • Sunucuya dosya yüklenmez</p>
+            <p class="footer-text">Tüm işlemler tarayıcınızda gerçekleşir</p>
             <div class="footer-features">
                 <span class="feature-badge">🔒 Güvenli</span>
                 <span class="feature-badge">⚡ Hızlı</span>
-                <span class="feature-badge">📱 Mobil Uyumlu</span>
+                <span class="feature-badge">📱 Mobil</span>
             </div>
         </footer>
     </main>
 
-    <!-- Notification Container -->
-    <div id="notificationContainer" aria-live="assertive" aria-atomic="true"></div>
+    <div id="notificationContainer"></div>
 
-    <script type="module">
-        // ===== FFMPEG SETUP =====
-        // Using latest stable version with proper CORS handling
-        import { FFmpeg } from 'https://esm.sh/@ffmpeg/ffmpeg@0.12.10';
-        import { fetchFile, toBlobURL } from 'https://esm.sh/@ffmpeg/util@0.12.1';
+    <script>
+        // ===== FFMPEG CORE CONFIGURATION =====
+        // Using unpkg CDN with proper versioning for stability
+        const FFMPEG_CONFIG = {
+            // Version 0.12.6 is stable and well-tested
+            baseURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd',
+            get coreURL() { return `${this.baseURL}/ffmpeg-core.js`; },
+            get wasmURL() { return `${this.baseURL}/ffmpeg-core.wasm`; }
+        };
 
-        // ===== STATE MANAGEMENT =====
+        // ===== STATE =====
         const state = {
             ffmpeg: null,
             isLoaded: false,
@@ -982,25 +641,26 @@
             errorCount: 0
         };
 
-        // ===== DOM ELEMENTS =====
+        // ===== ELEMENTS =====
+        const $ = id => document.getElementById(id);
         const elements = {
-            fileZone: document.getElementById('fileZone'),
-            fileInput: document.getElementById('fileInput'),
-            fileText: document.getElementById('fileText'),
-            convertBtn: document.getElementById('convertBtn'),
-            queueContainer: document.getElementById('queueContainer'),
-            queueList: document.getElementById('queueList'),
-            queueStats: document.getElementById('queueStats'),
-            statusDot: document.getElementById('statusDot'),
-            statusText: document.getElementById('statusText'),
-            targetFormat: document.getElementById('targetFormat'),
-            qualityMode: document.getElementById('qualityMode'),
-            resolution: document.getElementById('resolution'),
-            audioQuality: document.getElementById('audioQuality'),
-            notificationContainer: document.getElementById('notificationContainer')
+            fileZone: $('fileZone'),
+            fileInput: $('fileInput'),
+            fileText: $('fileText'),
+            convertBtn: $('convertBtn'),
+            queueContainer: $('queueContainer'),
+            queueList: $('queueList'),
+            queueStats: $('queueStats'),
+            statusDot: $('statusDot'),
+            statusText: $('statusText'),
+            targetFormat: $('targetFormat'),
+            qualityMode: $('qualityMode'),
+            resolution: $('resolution'),
+            audioQuality: $('audioQuality'),
+            notificationContainer: $('notificationContainer')
         };
 
-        // ===== UTILITY FUNCTIONS =====
+        // ===== UTILITIES =====
         const utils = {
             formatBytes(bytes) {
                 if (bytes === 0) return '0 B';
@@ -1009,471 +669,141 @@
                 const i = Math.floor(Math.log(bytes) / Math.log(k));
                 return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
             },
-
-            getFileExtension(filename) {
-                return filename.split('.').pop().toLowerCase();
+            getExt(name) {
+                return name.split('.').pop().toLowerCase();
             },
-
-            truncateFilename(name, maxLength = 25) {
-                if (name.length <= maxLength) return name;
-                const ext = this.getFileExtension(name);
-                const base = name.slice(0, name.lastIndexOf('.'));
-                const truncated = base.slice(0, maxLength - ext.length - 4) + '...';
-                return truncated + '.' + ext;
+            truncate(name, max = 25) {
+                if (name.length <= max) return name;
+                const ext = this.getExt(name);
+                return name.slice(0, max - ext.length - 4) + '...' + ext;
             },
-
             getMediaType(file) {
                 if (file.type.startsWith('video/')) return 'video';
                 if (file.type.startsWith('audio/')) return 'audio';
                 if (file.type.startsWith('image/')) return 'image';
                 return 'unknown';
             },
-
-            debounce(func, wait) {
-                let timeout;
-                return function executedFunction(...args) {
-                    const later = () => {
-                        clearTimeout(timeout);
-                        func(...args);
-                    };
-                    clearTimeout(timeout);
-                    timeout = setTimeout(later, wait);
-                };
+            getIcon(file) {
+                const icons = { video: '🎬', audio: '🎵', image: '🖼️', unknown: '📄' };
+                return icons[this.getMediaType(file)];
             }
         };
 
-        // ===== NOTIFICATION SYSTEM =====
-        const notification = {
-            show(message, type = 'success', duration = 4000) {
+        // ===== NOTIFICATIONS =====
+        const notify = {
+            show(msg, type = 'success', duration = 4000) {
                 const id = Date.now();
-                const icons = {
-                    success: '✅',
-                    error: '❌',
-                    warning: '⚠️',
-                    info: 'ℹ️'
-                };
-
-                const notif = document.createElement('div');
-                notif.className = `notification ${type}`;
-                notif.id = `notif-${id}`;
-                notif.innerHTML = `
-                    <span aria-hidden="true">${icons[type]}</span>
-                    <span>${message}</span>
-                    <button class="notification-close" aria-label="Bildirimi kapat">&times;</button>
+                const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+                const div = document.createElement('div');
+                div.className = `notification ${type}`;
+                div.id = `notif-${id}`;
+                div.innerHTML = `
+                    <span>${icons[type]}</span>
+                    <span>${msg}</span>
+                    <button class="notification-close">&times;</button>
                 `;
-
-                elements.notificationContainer.appendChild(notif);
-
-                notif.querySelector('.notification-close').onclick = () => this.dismiss(id);
-
-                if (duration > 0) {
-                    setTimeout(() => this.dismiss(id), duration);
-                }
-
+                elements.notificationContainer.appendChild(div);
+                div.querySelector('.notification-close').onclick = () => this.dismiss(id);
+                if (duration > 0) setTimeout(() => this.dismiss(id), duration);
                 return id;
             },
-
             dismiss(id) {
-                const notif = document.getElementById(`notif-${id}`);
-                if (notif) {
-                    notif.style.animation = 'slideUp 0.3s ease reverse';
-                    setTimeout(() => notif.remove(), 300);
+                const el = $(`notif-${id}`);
+                if (el) {
+                    el.style.animation = 'slideUp 0.3s ease reverse';
+                    setTimeout(() => el.remove(), 300);
                 }
             }
         };
 
-        // ===== FFMPEG CONFIGURATION =====
-        const ffmpegConfig = {
-            // Quality presets based on mode
-            getQualityArgs(mode, format) {
-                const presets = {
-                    quality: { crf: '18', preset: 'slow', audioBitrate: '320k' },
-                    balanced: { crf: '23', preset: 'medium', audioBitrate: '192k' },
-                    speed: { crf: '28', preset: 'ultrafast', audioBitrate: '128k' },
-                    tiny: { crf: '35', preset: 'ultrafast', audioBitrate: '64k' }
-                };
-                return presets[mode] || presets.balanced;
-            },
-
-            // Build FFmpeg arguments based on format and settings
-            buildArgs(inputFile, outputFormat, settings) {
-                const args = ['-i', inputFile];
-                const quality = this.getQualityArgs(settings.quality, outputFormat);
-                const targetOption = elements.targetFormat.selectedOptions[0];
-                const mediaType = targetOption?.dataset.type || 'video';
-
-                // Resolution handling
-                if (settings.resolution !== 'original' && mediaType === 'video') {
-                    args.push('-vf', `scale=-2:${settings.resolution}`);
-                }
-
-                // Format-specific encoding
-                switch (outputFormat) {
-                    // Video formats
-                    case 'mp4':
-                        args.push(
-                            '-c:v', 'libx264',
-                            '-crf', quality.crf,
-                            '-preset', quality.preset,
-                            '-c:a', 'aac',
-                            '-b:a', quality.audioBitrate,
-                            '-movflags', '+faststart',
-                            '-pix_fmt', 'yuv420p'
-                        );
-                        break;
-
-                    case 'webm':
-                        args.push(
-                            '-c:v', 'libvpx-vp9',
-                            '-crf', quality.crf,
-                            '-b:v', '0',
-                            '-cpu-used', quality.preset === 'ultrafast' ? '8' : '4',
-                            '-c:a', 'libopus',
-                            '-b:a', quality.audioBitrate
-                        );
-                        break;
-
-                    case 'mkv':
-                        args.push(
-                            '-c:v', 'libx264',
-                            '-crf', quality.crf,
-                            '-preset', quality.preset,
-                            '-c:a', 'aac',
-                            '-b:a', quality.audioBitrate
-                        );
-                        break;
-
-                    case 'avi':
-                        args.push(
-                            '-c:v', 'mpeg4',
-                            '-q:v', Math.ceil(parseInt(quality.crf) / 6).toString(),
-                            '-c:a', 'mp3',
-                            '-b:a', quality.audioBitrate
-                        );
-                        break;
-
-                    case 'mov':
-                        args.push(
-                            '-c:v', 'libx264',
-                            '-crf', quality.crf,
-                            '-preset', quality.preset,
-                            '-c:a', 'aac',
-                            '-b:a', quality.audioBitrate,
-                            '-pix_fmt', 'yuv420p'
-                        );
-                        break;
-
-                    case '3gp':
-                    case '3g2':
-                        args.push(
-                            '-c:v', 'h263',
-                            '-s', '352x288',
-                            '-c:a', 'amr_nb',
-                            '-ar', '8000',
-                            '-ac', '1'
-                        );
-                        break;
-
-                    case 'flv':
-                        args.push(
-                            '-c:v', 'flv1',
-                            '-q:v', '5',
-                            '-c:a', 'mp3',
-                            '-b:a', quality.audioBitrate
-                        );
-                        break;
-
-                    case 'ts':
-                    case 'mts':
-                    case 'm2ts':
-                        args.push(
-                            '-c:v', 'libx264',
-                            '-crf', quality.crf,
-                            '-preset', quality.preset,
-                            '-c:a', 'aac',
-                            '-b:a', quality.audioBitrate,
-                            '-f', 'mpegts'
-                        );
-                        break;
-
-                    case 'wmv':
-                        args.push(
-                            '-c:v', 'wmv2',
-                            '-q:v', '5',
-                            '-c:a', 'wmav2',
-                            '-b:a', quality.audioBitrate
-                        );
-                        break;
-
-                    case 'mpg':
-                    case 'mpeg':
-                        args.push(
-                            '-c:v', 'mpeg2video',
-                            '-q:v', '5',
-                            '-c:a', 'mp2',
-                            '-b:a', quality.audioBitrate
-                        );
-                        break;
-
-                    case 'ogv':
-                        args.push(
-                            '-c:v', 'libtheora',
-                            '-q:v', '7',
-                            '-c:a', 'libvorbis',
-                            '-q:a', '5'
-                        );
-                        break;
-
-                    // Audio formats
-                    case 'mp3':
-                        args.push(
-                            '-vn',
-                            '-c:a', 'libmp3lame',
-                            '-b:a', settings.audioBitrate + 'k'
-                        );
-                        break;
-
-                    case 'aac':
-                    case 'm4a':
-                        args.push(
-                            '-vn',
-                            '-c:a', 'aac',
-                            '-b:a', settings.audioBitrate + 'k'
-                        );
-                        break;
-
-                    case 'ogg':
-                        args.push(
-                            '-vn',
-                            '-c:a', 'libvorbis',
-                            '-q:a', '6'
-                        );
-                        break;
-
-                    case 'opus':
-                        args.push(
-                            '-vn',
-                            '-c:a', 'libopus',
-                            '-b:a', settings.audioBitrate + 'k'
-                        );
-                        break;
-
-                    case 'wav':
-                        args.push(
-                            '-vn',
-                            '-c:a', 'pcm_s16le'
-                        );
-                        break;
-
-                    case 'flac':
-                        args.push(
-                            '-vn',
-                            '-c:a', 'flac',
-                            '-compression_level', '8'
-                        );
-                        break;
-
-                    case 'wma':
-                        args.push(
-                            '-vn',
-                            '-c:a', 'wmav2',
-                            '-b:a', settings.audioBitrate + 'k'
-                        );
-                        break;
-
-                    case 'aiff':
-                        args.push(
-                            '-vn',
-                            '-c:a', 'pcm_s16be'
-                        );
-                        break;
-
-                    case 'amr':
-                        args.push(
-                            '-vn',
-                            '-c:a', 'amr_nb',
-                            '-ar', '8000',
-                            '-ac', '1'
-                        );
-                        break;
-
-                    // Image formats
-                    case 'gif':
-                        args.push(
-                            '-vf', 'fps=10,scale=480:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse',
-                            '-loop', '0'
-                        );
-                        break;
-
-                    case 'jpg':
-                    case 'jpeg':
-                        args.push(
-                            '-vframes', '1',
-                            '-q:v', '2'
-                        );
-                        break;
-
-                    case 'png':
-                        args.push(
-                            '-vframes', '1',
-                            '-compression_level', '6'
-                        );
-                        break;
-
-                    case 'webp':
-                        args.push(
-                            '-vframes', '1',
-                            '-quality', '90'
-                        );
-                        break;
-
-                    case 'bmp':
-                    case 'tiff':
-                    case 'tga':
-                        args.push('-vframes', '1');
-                        break;
-
-                    case 'apng':
-                        args.push(
-                            '-plays', '0',
-                            '-f', 'apng'
-                        );
-                        break;
-
-                    default:
-                        // Generic fallback
-                        args.push('-c', 'copy');
-                }
-
-                return args;
-            }
-        };
-
-        // ===== QUEUE MANAGEMENT =====
+        // ===== QUEUE =====
         const queue = {
             render() {
-                const files = state.files;
-                if (files.length === 0) {
+                if (state.files.length === 0) {
                     elements.queueContainer.hidden = true;
                     return;
                 }
-
                 elements.queueContainer.hidden = false;
-                elements.queueList.innerHTML = files.map((file, idx) => `
-                    <div class="queue-item" id="queue-${idx}" role="listitem" data-status="waiting">
+                elements.queueList.innerHTML = state.files.map((file, i) => `
+                    <div class="queue-item" id="queue-${i}" data-status="waiting">
                         <div class="queue-item-header">
                             <span class="queue-item-name">
-                                <span aria-hidden="true">${this.getFileIcon(file)}</span>
-                                ${utils.truncateFilename(file.name)}
+                                ${utils.getIcon(file)} ${utils.truncate(file.name)}
                             </span>
-                            <span class="queue-item-status waiting" id="status-${idx}">Bekliyor</span>
+                            <span class="queue-item-status waiting" id="status-${i}">Bekliyor</span>
                         </div>
                         <div class="queue-item-info">
                             <span>📦 ${utils.formatBytes(file.size)}</span>
-                            <span>📄 ${utils.getFileExtension(file.name).toUpperCase()}</span>
+                            <span>📄 ${utils.getExt(file.name).toUpperCase()}</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" id="progress-${idx}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-fill" id="progress-${i}"></div>
                         </div>
                     </div>
                 `).join('');
-
                 this.updateStats();
             },
-
-            getFileIcon(file) {
-                const type = utils.getMediaType(file);
-                const icons = { video: '🎬', audio: '🎵', image: '🖼️', unknown: '📄' };
-                return icons[type];
-            },
-
-            updateItem(index, status, progress = null) {
-                const item = document.getElementById(`queue-${index}`);
-                const statusEl = document.getElementById(`status-${index}`);
-                const progressEl = document.getElementById(`progress-${index}`);
-
+            update(i, status, progress = null) {
+                const item = $(`queue-${i}`);
+                const statusEl = $(`status-${i}`);
+                const progressEl = $(`progress-${i}`);
                 if (!item) return;
 
-                item.dataset.status = status;
-                item.className = `queue-item ${status}`;
-                
-                const statusLabels = {
+                const labels = {
                     waiting: 'Bekliyor',
                     processing: 'İşleniyor...',
                     completed: 'Tamamlandı ✓',
                     error: 'Hata!'
                 };
 
-                statusEl.textContent = statusLabels[status] || status;
+                item.className = `queue-item ${status}`;
+                statusEl.textContent = labels[status];
                 statusEl.className = `queue-item-status ${status}`;
 
                 if (progress !== null) {
                     progressEl.style.width = `${progress}%`;
-                    progressEl.setAttribute('aria-valuenow', progress);
                 }
-
                 if (status === 'error') {
                     progressEl.classList.add('error');
                 }
-
                 this.updateStats();
             },
-
             updateStats() {
-                const total = state.files.length;
-                const completed = state.completedCount;
-                elements.queueStats.textContent = `${completed}/${total} tamamlandı`;
+                elements.queueStats.textContent = `${state.completedCount}/${state.files.length}`;
             }
         };
 
         // ===== FILE HANDLING =====
         const fileHandler = {
-            handleFiles(files) {
+            handle(files) {
                 if (files.length === 0) return;
-
                 state.files = Array.from(files);
                 state.completedCount = 0;
                 state.errorCount = 0;
 
-                // Update UI
                 elements.fileZone.classList.add('has-files');
                 elements.fileText.innerHTML = `
                     <strong>${state.files.length} dosya seçildi</strong>
                     <div class="file-count">
-                        📁 ${utils.formatBytes(state.files.reduce((sum, f) => sum + f.size, 0))} toplam
+                        📁 ${utils.formatBytes(state.files.reduce((s, f) => s + f.size, 0))}
                     </div>
                 `;
-
                 elements.convertBtn.disabled = !state.isLoaded;
                 queue.render();
-
-                notification.show(`${state.files.length} dosya kuyruğa eklendi`, 'success');
+                notify.show(`${state.files.length} dosya eklendi`, 'success');
             },
-
             setupDragDrop() {
                 const zone = elements.fileZone;
-
-                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(event => {
-                    zone.addEventListener(event, e => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                    });
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(e => {
+                    zone.addEventListener(e, ev => { ev.preventDefault(); ev.stopPropagation(); });
                 });
-
-                ['dragenter', 'dragover'].forEach(event => {
-                    zone.addEventListener(event, () => zone.classList.add('drag-over'));
+                ['dragenter', 'dragover'].forEach(e => {
+                    zone.addEventListener(e, () => zone.classList.add('drag-over'));
                 });
-
-                ['dragleave', 'drop'].forEach(event => {
-                    zone.addEventListener(event, () => zone.classList.remove('drag-over'));
+                ['dragleave', 'drop'].forEach(e => {
+                    zone.addEventListener(e, () => zone.classList.remove('drag-over'));
                 });
-
-                zone.addEventListener('drop', e => {
-                    const files = e.dataTransfer.files;
-                    this.handleFiles(files);
-                });
-
-                // Keyboard accessibility
+                zone.addEventListener('drop', e => this.handle(e.dataTransfer.files));
                 zone.addEventListener('keydown', e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
@@ -1483,7 +813,127 @@
             }
         };
 
-        // ===== CONVERSION ENGINE =====
+        // ===== FFMPEG ENCODER CONFIG =====
+        const encoder = {
+            getQuality(mode) {
+                const presets = {
+                    quality: { crf: '18', preset: 'slow', audio: '320k' },
+                    balanced: { crf: '23', preset: 'medium', audio: '192k' },
+                    speed: { crf: '28', preset: 'ultrafast', audio: '128k' },
+                    tiny: { crf: '35', preset: 'ultrafast', audio: '64k' }
+                };
+                return presets[mode] || presets.balanced;
+            },
+            buildArgs(input, format, settings) {
+                const args = ['-i', input];
+                const q = this.getQuality(settings.quality);
+
+                // Resolution
+                if (settings.resolution !== 'original') {
+                    args.push('-vf', `scale=-2:${settings.resolution}`);
+                }
+
+                switch (format) {
+                    case 'mp4':
+                        args.push('-c:v', 'libx264', '-crf', q.crf, '-preset', q.preset,
+                            '-c:a', 'aac', '-b:a', q.audio, '-movflags', '+faststart', '-pix_fmt', 'yuv420p');
+                        break;
+                    case 'webm':
+                        args.push('-c:v', 'libvpx-vp9', '-crf', q.crf, '-b:v', '0',
+                            '-cpu-used', q.preset === 'ultrafast' ? '8' : '4',
+                            '-c:a', 'libopus', '-b:a', q.audio);
+                        break;
+                    case 'mkv':
+                        args.push('-c:v', 'libx264', '-crf', q.crf, '-preset', q.preset,
+                            '-c:a', 'aac', '-b:a', q.audio);
+                        break;
+                    case 'avi':
+                        args.push('-c:v', 'mpeg4', '-q:v', '5', '-c:a', 'mp3', '-b:a', q.audio);
+                        break;
+                    case 'mov':
+                        args.push('-c:v', 'libx264', '-crf', q.crf, '-preset', q.preset,
+                            '-c:a', 'aac', '-b:a', q.audio, '-pix_fmt', 'yuv420p');
+                        break;
+                    case '3gp':
+                        args.push('-c:v', 'h263', '-s', '352x288', '-c:a', 'aac', '-ar', '8000', '-ac', '1');
+                        break;
+                    case 'flv':
+                        args.push('-c:v', 'flv1', '-q:v', '5', '-c:a', 'mp3', '-b:a', q.audio);
+                        break;
+                    case 'ts': case 'm2ts':
+                        args.push('-c:v', 'libx264', '-crf', q.crf, '-preset', q.preset,
+                            '-c:a', 'aac', '-b:a', q.audio, '-f', 'mpegts');
+                        break;
+                    case 'wmv':
+                        args.push('-c:v', 'wmv2', '-q:v', '5', '-c:a', 'wmav2', '-b:a', q.audio);
+                        break;
+                    case 'mpg': case 'mpeg':
+                        args.push('-c:v', 'mpeg2video', '-q:v', '5', '-c:a', 'mp2', '-b:a', q.audio);
+                        break;
+                    case 'ogv':
+                        args.push('-c:v', 'libtheora', '-q:v', '7', '-c:a', 'libvorbis', '-q:a', '5');
+                        break;
+                    case 'mp3':
+                        args.push('-vn', '-c:a', 'libmp3lame', '-b:a', settings.audioBitrate + 'k');
+                        break;
+                    case 'aac': case 'm4a':
+                        args.push('-vn', '-c:a', 'aac', '-b:a', settings.audioBitrate + 'k');
+                        break;
+                    case 'ogg':
+                        args.push('-vn', '-c:a', 'libvorbis', '-q:a', '6');
+                        break;
+                    case 'opus':
+                        args.push('-vn', '-c:a', 'libopus', '-b:a', settings.audioBitrate + 'k');
+                        break;
+                    case 'wav':
+                        args.push('-vn', '-c:a', 'pcm_s16le');
+                        break;
+                    case 'flac':
+                        args.push('-vn', '-c:a', 'flac', '-compression_level', '8');
+                        break;
+                    case 'wma':
+                        args.push('-vn', '-c:a', 'wmav2', '-b:a', settings.audioBitrate + 'k');
+                        break;
+                    case 'aiff':
+                        args.push('-vn', '-c:a', 'pcm_s16be');
+                        break;
+                    case 'gif':
+                        args.push('-vf', 'fps=10,scale=480:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse', '-loop', '0');
+                        break;
+                    case 'jpg': case 'jpeg':
+                        args.push('-vframes', '1', '-q:v', '2');
+                        break;
+                    case 'png':
+                        args.push('-vframes', '1');
+                        break;
+                    case 'webp':
+                        args.push('-vframes', '1', '-quality', '90');
+                        break;
+                    case 'bmp': case 'tiff':
+                        args.push('-vframes', '1');
+                        break;
+                    default:
+                        args.push('-c', 'copy');
+                }
+                return args;
+            },
+            getMime(format) {
+                const mimes = {
+                    mp4: 'video/mp4', webm: 'video/webm', mkv: 'video/x-matroska',
+                    avi: 'video/x-msvideo', mov: 'video/quicktime', '3gp': 'video/3gpp',
+                    flv: 'video/x-flv', ts: 'video/mp2t', wmv: 'video/x-ms-wmv',
+                    mpg: 'video/mpeg', mpeg: 'video/mpeg', ogv: 'video/ogg',
+                    mp3: 'audio/mpeg', aac: 'audio/aac', m4a: 'audio/mp4',
+                    ogg: 'audio/ogg', opus: 'audio/opus', wav: 'audio/wav',
+                    flac: 'audio/flac', wma: 'audio/x-ms-wma', aiff: 'audio/aiff',
+                    jpg: 'image/jpeg', png: 'image/png', gif: 'image/gif',
+                    webp: 'image/webp', bmp: 'image/bmp', tiff: 'image/tiff'
+                };
+                return mimes[format] || 'application/octet-stream';
+            }
+        };
+
+        // ===== CONVERTER =====
         const converter = {
             async process() {
                 if (state.files.length === 0 || state.isProcessing) return;
@@ -1492,7 +942,7 @@
                 elements.convertBtn.disabled = true;
                 elements.convertBtn.classList.add('loading');
 
-                const targetFormat = elements.targetFormat.value;
+                const format = elements.targetFormat.value;
                 const settings = {
                     quality: elements.qualityMode.value,
                     resolution: elements.resolution.value,
@@ -1501,207 +951,158 @@
 
                 for (let i = 0; i < state.files.length; i++) {
                     const file = state.files[i];
-                    queue.updateItem(i, 'processing', 0);
+                    queue.update(i, 'processing', 0);
 
                     try {
-                        await this.convertFile(file, i, targetFormat, settings);
+                        await this.convert(file, i, format, settings);
                         state.completedCount++;
-                        queue.updateItem(i, 'completed', 100);
-                    } catch (error) {
-                        console.error(`Error converting ${file.name}:`, error);
+                        queue.update(i, 'completed', 100);
+                    } catch (err) {
+                        console.error(`Error: ${file.name}`, err);
                         state.errorCount++;
-                        queue.updateItem(i, 'error');
-                        notification.show(`${file.name} dönüştürülemedi: ${error.message}`, 'error');
+                        queue.update(i, 'error');
+                        notify.show(`${utils.truncate(file.name, 20)} hata!`, 'error');
                     }
 
-                    // Clean up memory
+                    // Memory cleanup
                     try {
-                        await state.ffmpeg.deleteFile('input');
-                        await state.ffmpeg.deleteFile(`output.${targetFormat}`);
-                    } catch (e) {
-                        // Ignore cleanup errors
-                    }
+                        state.ffmpeg.FS('unlink', 'input');
+                        state.ffmpeg.FS('unlink', `output.${format}`);
+                    } catch (e) {}
                 }
 
                 state.isProcessing = false;
                 elements.convertBtn.disabled = false;
                 elements.convertBtn.classList.remove('loading');
 
-                // Final notification
                 if (state.errorCount === 0) {
-                    notification.show(`🎉 ${state.completedCount} dosya başarıyla dönüştürüldü!`, 'success');
+                    notify.show(`🎉 ${state.completedCount} dosya tamamlandı!`, 'success');
                 } else {
-                    notification.show(
-                        `${state.completedCount} başarılı, ${state.errorCount} başarısız`,
-                        state.completedCount > 0 ? 'warning' : 'error'
-                    );
+                    notify.show(`${state.completedCount} başarılı, ${state.errorCount} hatalı`, 'warning');
                 }
             },
 
-            async convertFile(file, index, targetFormat, settings) {
+            async convert(file, index, format, settings) {
                 const inputName = 'input';
-                const outputName = `output.${targetFormat}`;
+                const outputName = `output.${format}`;
 
-                // Write input file
-                const fileData = await fetchFile(file);
-                await state.ffmpeg.writeFile(inputName, fileData);
+                // Read file
+                const fileData = await this.readFile(file);
+                state.ffmpeg.FS('writeFile', inputName, fileData);
 
-                // Build and run FFmpeg command
-                const args = ffmpegConfig.buildArgs(inputName, targetFormat, settings);
+                // Build args
+                const args = encoder.buildArgs(inputName, format, settings);
                 args.push(outputName);
 
-                // Set up progress tracking
-                state.ffmpeg.on('progress', ({ progress }) => {
-                    const percent = Math.round(progress * 100);
-                    queue.updateItem(index, 'processing', Math.min(percent, 99));
+                // Progress handler
+                state.ffmpeg.setProgress(({ ratio }) => {
+                    const pct = Math.min(Math.round(ratio * 100), 99);
+                    queue.update(index, 'processing', pct);
                 });
 
-                // Run conversion
-                await state.ffmpeg.exec(args);
+                // Run
+                await state.ffmpeg.run(...args);
 
-                // Read output and trigger download
-                const outputData = await state.ffmpeg.readFile(outputName);
-                const blob = new Blob([outputData.buffer], { 
-                    type: this.getMimeType(targetFormat) 
+                // Read output
+                const output = state.ffmpeg.FS('readFile', outputName);
+                const blob = new Blob([output.buffer], { type: encoder.getMime(format) });
+
+                // Download
+                const baseName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `${baseName}_converted.${format}`;
+                link.click();
+                setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+            },
+
+            readFile(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(new Uint8Array(reader.result));
+                    reader.onerror = reject;
+                    reader.readAsArrayBuffer(file);
                 });
-
-                this.downloadFile(blob, file.name, targetFormat);
-            },
-
-            getMimeType(format) {
-                const mimeTypes = {
-                    // Video
-                    mp4: 'video/mp4',
-                    webm: 'video/webm',
-                    mkv: 'video/x-matroska',
-                    avi: 'video/x-msvideo',
-                    mov: 'video/quicktime',
-                    '3gp': 'video/3gpp',
-                    flv: 'video/x-flv',
-                    ts: 'video/mp2t',
-                    wmv: 'video/x-ms-wmv',
-                    mpg: 'video/mpeg',
-                    mpeg: 'video/mpeg',
-                    ogv: 'video/ogg',
-                    
-                    // Audio
-                    mp3: 'audio/mpeg',
-                    aac: 'audio/aac',
-                    m4a: 'audio/mp4',
-                    ogg: 'audio/ogg',
-                    opus: 'audio/opus',
-                    wav: 'audio/wav',
-                    flac: 'audio/flac',
-                    wma: 'audio/x-ms-wma',
-                    aiff: 'audio/aiff',
-                    
-                    // Image
-                    jpg: 'image/jpeg',
-                    jpeg: 'image/jpeg',
-                    png: 'image/png',
-                    gif: 'image/gif',
-                    webp: 'image/webp',
-                    bmp: 'image/bmp',
-                    tiff: 'image/tiff',
-                    ico: 'image/x-icon',
-                    apng: 'image/apng'
-                };
-                return mimeTypes[format] || 'application/octet-stream';
-            },
-
-            downloadFile(blob, originalName, format) {
-                const baseName = originalName.substring(0, originalName.lastIndexOf('.')) || originalName;
-                const downloadName = `${baseName}_converted.${format}`;
-                
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = downloadName;
-                a.click();
-                
-                // Cleanup
-                setTimeout(() => URL.revokeObjectURL(url), 1000);
             }
         };
 
-        // ===== INITIALIZATION =====
+        // ===== FFMPEG INITIALIZATION =====
         async function initFFmpeg() {
             try {
-                // Check for SharedArrayBuffer support
-                if (typeof SharedArrayBuffer === 'undefined') {
-                    throw new Error('SharedArrayBuffer desteklenmiyor. HTTPS veya localhost gereklidir.');
-                }
+                elements.statusText.textContent = 'FFmpeg yükleniyor...';
 
-                state.ffmpeg = new FFmpeg();
-
-                // Load FFmpeg with CORS-safe URLs
-                const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm';
+                // Load FFmpeg script
+                const script = document.createElement('script');
+                script.src = 'https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js';
                 
-                await state.ffmpeg.load({
-                    coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
-                    wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm')
+                await new Promise((resolve, reject) => {
+                    script.onload = resolve;
+                    script.onerror = () => reject(new Error('FFmpeg script yüklenemedi'));
+                    document.head.appendChild(script);
                 });
+
+                // Create FFmpeg instance
+                const { createFFmpeg, fetchFile } = FFmpeg;
+                
+                state.ffmpeg = createFFmpeg({
+                    log: false,
+                    corePath: FFMPEG_CONFIG.coreURL,
+                    // This is the key fix - we're not using worker for this version
+                    mainName: 'main'
+                });
+
+                // Store fetchFile globally for converter
+                window.ffmpegFetchFile = fetchFile;
+
+                elements.statusText.textContent = 'FFmpeg başlatılıyor...';
+                await state.ffmpeg.load();
 
                 state.isLoaded = true;
                 elements.statusDot.classList.add('ready');
-                elements.statusText.textContent = 'FFmpeg hazır';
-                
+                elements.statusText.textContent = 'FFmpeg hazır ✓';
+
                 if (state.files.length > 0) {
                     elements.convertBtn.disabled = false;
                 }
 
-                notification.show('FFmpeg başarıyla yüklendi!', 'success', 3000);
+                notify.show('FFmpeg başarıyla yüklendi!', 'success', 3000);
 
             } catch (error) {
-                console.error('FFmpeg yükleme hatası:', error);
+                console.error('FFmpeg init error:', error);
                 elements.statusDot.classList.add('error');
                 elements.statusText.textContent = 'FFmpeg yüklenemedi';
-                
-                notification.show(
-                    `FFmpeg yüklenemedi: ${error.message}`,
-                    'error',
-                    0
-                );
+                notify.show(`Hata: ${error.message}`, 'error', 0);
             }
         }
 
-        function setupEventListeners() {
-            // File input
+        // ===== EVENT LISTENERS =====
+        function setupEvents() {
             elements.fileInput.addEventListener('change', e => {
-                fileHandler.handleFiles(e.target.files);
+                fileHandler.handle(e.target.files);
             });
 
-            // File zone click
             elements.fileZone.addEventListener('click', () => {
                 elements.fileInput.click();
             });
 
-            // Convert button
             elements.convertBtn.addEventListener('click', () => {
                 converter.process();
             });
 
-            // Setup drag and drop
             fileHandler.setupDragDrop();
 
-            // Keyboard shortcuts
+            // Keyboard shortcut
             document.addEventListener('keydown', e => {
-                // Ctrl/Cmd + O to open file dialog
                 if ((e.ctrlKey || e.metaKey) && e.key === 'o') {
                     e.preventDefault();
                     elements.fileInput.click();
                 }
-                
-                // Enter to start conversion when ready
-                if (e.key === 'Enter' && !elements.convertBtn.disabled && document.activeElement === elements.convertBtn) {
-                    converter.process();
-                }
             });
         }
 
-        // ===== APP START =====
+        // ===== START =====
         document.addEventListener('DOMContentLoaded', () => {
-            setupEventListeners();
+            setupEvents();
             initFFmpeg();
         });
     </script>
