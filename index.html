@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Media Morph Beast</title>
     
-    <!-- FFmpeg v0.12 Core ve Utils (Resmi CDN) -->
+    <!-- FFmpeg v0.12 Core ve Utils (UMD) -->
     <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
 
@@ -131,7 +131,6 @@
         .config { display: grid; gap: 10px; margin: 1.25rem 0; }
         @media(min-width:400px) { .config { grid-template-columns: 1fr 1fr; } }
         .input-box { background: var(--card2); padding: 12px; border-radius: 12px; border: 1px solid var(--border); }
-        .input-box.full { grid-column: 1/-1; }
         .lbl { font-size: 0.6rem; color: var(--muted); font-weight: 800; text-transform: uppercase; margin-bottom: 6px; }
         .sel-wrap { position: relative; }
         .sel-wrap::after { content: '▾'; position: absolute; right: 0; top: 50%; transform: translateY(-50%); font-size: 0.7rem; color: var(--dim); pointer-events: none; }
@@ -295,18 +294,21 @@
             setTimeout(() => { if(d.parentElement) d.remove(); }, 4000);
         }
 
-        // ===== FFMPEG BAŞLATMA (v0.12 KESİN ÇÖZÜM) =====
+        // ===== FFMPEG BAŞLATMA =====
         async function initFFmpeg() {
             try {
-                // FFmpeg ve FetchFile global objelerini v0.12 CDN'den çekiyoruz
-                const { FFmpeg } = window.FFmpeg;
-                const { toBlobURL, fetchFile } = window.FFmpegUtil;
+                // HATA BURADAYDI: v0.12'de obje adı FFmpegWASM olarak değiştirildi.
+                if (!window.FFmpegWASM || !window.FFmpegUtil) {
+                    throw new Error("FFmpeg kütüphanesi yüklenemedi. İnternet bağlantınızı kontrol edin.");
+                }
+
+                const { FFmpeg } = window.FFmpegWASM; // <--- DÜZELTİLEN KISIM
+                const { toBlobURL } = window.FFmpegUtil;
 
                 ffmpeg = new FFmpeg();
                 
-                D.statusMsg.textContent = 'Motor indiriliyor...';
+                D.statusMsg.textContent = 'Motor indiriliyor (Lütfen bekleyin)...';
                 
-                // HATA DÜZELTEN KISIM: JS ve WASM dosyalarını Blob olarak zorla okutuyoruz
                 const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd';
                 
                 await ffmpeg.load({
@@ -324,8 +326,8 @@
             } catch (err) {
                 console.error(err);
                 D.dot.classList.add('err');
-                D.statusMsg.textContent = 'Hata oluştu!';
-                toast('Yükleme Hatası: ' + err.message, 'error');
+                D.statusMsg.textContent = 'Yükleme Başarısız!';
+                toast(err.message, 'error');
             }
         }
 
@@ -359,12 +361,11 @@
         async function convert() {
             if (!S.files.length || S.busy || !S.loaded) return;
             S.busy = true; D.goBtn.disabled = true; D.goBtn.classList.add('loading');
-            const { fetchFile } = window.FFmpegUtil;
-
+            
+            const { fetchFile } = window.FFmpegUtil; // <--- Utils nesnesi
             const format = D.fmt.value;
             const qMode = D.qMode.value;
             
-            // Basit FFmpeg Argümanları
             const getArgs = (f) => {
                 const isVideo = ['mp4','webm','mkv','avi','mov'].includes(f);
                 const isAudio = ['mp3','aac','wav','ogg','flac'].includes(f);
@@ -374,7 +375,7 @@
                 if(isVideo) return ['-c:v', 'libx264', '-preset', preset, '-crf', crf, '-c:a', 'aac'];
                 if(isAudio) return ['-vn', '-b:a', '192k'];
                 if(f === 'gif') return ['-vf', 'fps=10,scale=480:-1:flags=lanczos', '-loop', '0'];
-                return []; // Görseller için default
+                return []; 
             };
 
             for (let i = 0; i < S.files.length; i++) {
@@ -384,7 +385,6 @@
                 badge.textContent = 'İşleniyor...';
                 badge.className = 'q-badge processing';
 
-                // İlerleme Çubuğu Event'i (v0.12 syntax)
                 ffmpeg.on('progress', ({ progress }) => {
                     const pct = Math.min(Math.round(progress * 100), 99);
                     bar.style.width = pct + '%';
@@ -399,7 +399,6 @@
                     
                     const data = await ffmpeg.readFile(outName);
                     
-                    // İndirme tetikleyici
                     const blob = new Blob([data.buffer]);
                     const link = document.createElement('a');
                     link.href = URL.createObjectURL(blob);
@@ -409,9 +408,9 @@
                     bar.style.width = '100%';
                     badge.textContent = 'Tamamlandı ✓';
                     badge.className = 'q-badge completed';
+                    qItem.className = 'q-item completed';
                     S.done++;
 
-                    // Hafıza Temizliği
                     await ffmpeg.deleteFile(inName);
                     await ffmpeg.deleteFile(outName);
 
@@ -420,6 +419,7 @@
                     bar.classList.add('err');
                     badge.textContent = 'Hata!';
                     badge.className = 'q-badge error';
+                    qItem.className = 'q-item error';
                     S.errs++;
                 }
                 D.qStats.textContent = `${S.done}/${S.files.length}`;
