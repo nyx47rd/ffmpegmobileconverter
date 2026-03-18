@@ -3,37 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Media Morph Pro</title>
+    <title>Media Morph Beast | 50+ Formats</title>
     <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
     <style>
-        :root { --bg: #030712; --card: #0f172a; --accent: #3b82f6; --text: #f8fafc; }
-        body { margin: 0; font-family: sans-serif; background: var(--bg); color: var(--text); display: flex; align-items: center; justify-content: center; min-height: screen; height: 100vh; }
-        .container { background: var(--card); width: 90%; max-width: 400px; padding: 2rem; border-radius: 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05); text-align: center; }
-        h1 { font-size: 1.8rem; font-weight: 900; margin: 0; background: linear-gradient(90deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        p { color: #64748b; font-size: 0.7rem; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 1px; }
-        .file-zone { border: 2px dashed #1e293b; padding: 2rem; border-radius: 1.5rem; cursor: pointer; transition: 0.3s; margin-bottom: 1.5rem; }
+        :root { --bg: #020617; --card: #0f172a; --accent: #3b82f6; --text: #f8fafc; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 15px; }
+        .container { background: var(--card); width: 100%; max-width: 450px; padding: 2rem; border-radius: 2.5rem; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 25px 50px rgba(0,0,0,0.6); }
+        h1 { font-size: 1.8rem; font-weight: 900; text-align: center; margin: 0; background: linear-gradient(90deg, #60a5fa, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .file-zone { border: 2px dashed #1e293b; padding: 2.5rem 1rem; border-radius: 1.5rem; cursor: pointer; transition: 0.3s; margin: 1.5rem 0; text-align: center; background: rgba(30, 41, 59, 0.3); }
         .file-zone:hover { border-color: var(--accent); background: rgba(59, 130, 246, 0.05); }
-        .controls { display: grid; grid-template-cols: 1fr 1fr; gap: 10px; margin-bottom: 1.5rem; }
-        .control-group { background: #1e293b; padding: 10px; border-radius: 1rem; text-align: left; }
-        label { font-size: 10px; color: #94a3b8; font-weight: bold; display: block; margin-bottom: 5px; }
-        select { background: none; border: none; color: white; width: 100%; font-weight: bold; outline: none; }
-        button { width: 100%; background: var(--accent); color: white; border: none; padding: 1.2rem; border-radius: 1.2rem; font-weight: 900; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2); }
-        button:disabled { opacity: 0.5; cursor: not-allowed; }
-        #progressBox { margin-top: 1.5rem; }
-        .bar-bg { width: 100%; background: #1e293b; height: 6px; border-radius: 10px; margin-top: 10px; overflow: hidden; }
-        #bar { width: 0%; height: 100%; background: var(--accent); transition: 0.3s; }
-        .status-text { font-size: 10px; font-weight: bold; color: var(--accent); }
+        .config-grid { display: grid; grid-template-cols: 1fr; gap: 12px; margin-bottom: 1.5rem; }
+        .input-box { background: #1e293b; padding: 12px; border-radius: 1.2rem; border: 1px solid #334155; }
+        label { font-size: 10px; color: #94a3b8; font-weight: 900; display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
+        select { background: none; border: none; color: white; width: 100%; font-weight: 700; outline: none; font-size: 14px; cursor: pointer; }
+        option { background: #0f172a; color: white; }
+        button { width: 100%; background: var(--accent); color: white; border: none; padding: 1.2rem; border-radius: 1.2rem; font-weight: 900; cursor: pointer; transition: 0.3s; font-size: 1rem; box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2); }
+        button:disabled { opacity: 0.4; cursor: wait; }
+        .queue-item { background: #1e293b; margin-top: 10px; padding: 12px; border-radius: 1rem; font-size: 11px; border-left: 4px solid var(--accent); }
+        .bar-container { width: 100%; background: #020617; height: 6px; border-radius: 10px; margin-top: 8px; overflow: hidden; }
+        .progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #3b82f6, #10b981); transition: 0.2s; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Media Morph Pro</h1>
-    <p>S24 Ultra Native Engine</p>
+    <h1>Media Morph Beast</h1>
+    <p style="text-align:center; color:#475569; font-size: 10px; font-weight:bold; margin-top:5px;">50+ FORMATS • MULTI-FILE • S24 ENGINE</p>
 
-    <input type="file" id="fileInput" style="display:none">
+    <input type="file" id="fileInput" multiple style="display:none">
     <div class="file-zone" onclick="document.getElementById('fileInput').click()">
-        <div id="fileInfo" style="font-weight: bold; font-size: 0.9rem;">📥 Dosyayı Seç</div>
+        <div id="fileInfo"><b>📁 Dosyaları Seçin</b><br><span style="font-size: 9px; color:#64748b;">Aynı anda birden fazla medya seçebilirsin</span></div>
+    </div>
+
+    <div class="config-grid">
+        <div class="input-box">
+            <label>Hedef Format (50+)</label>
+            <select id="targetExt">
+                <optgroup label="🔥 Popüler Video">
+                    <option value="mp4">MP4 (H.264)</option>
+                    <option value="webm">WebM (AV1 - Ultra Sıkışık)</option>
+                    <option value="mkv">MKV (Matroska)</option>
+                    <option value="avi">AVI (Xvid)</option>
+                    <option value="mov">MOV (Apple)</option>
+                </optgroup>
+                <optgroup label="📱 Mobil & Eski">
+                    <option value="3gp">3GP (Eski Mobil)</option>
+                    <option value="3g2">3G2</option>
+                    <option value="m4v">M4V</option>
+                    <option value="flv">FLV (Flash)</option>
+                    <option value="ts">TS (Yayın Formatı)</option>
+                    <option value="wmv">WMV (Windows)</option>
+                    <option value="asf">ASF</option>
+                    <option value="vob">VOB (DVD)</option>
+                    <option value="mpg">MPG (MPEG-1)</option>
+                    <option value="mpeg">MPEG-2</option>
+                    <option value="m2ts">M2TS (Blu-ray)</option>
+                </optgroup>
+                <optgroup label="🎵 Ses Formatları">
+                    <option value="mp3">MP3</option>
+                    <option value="wav">WAV (Kayıpsız)</option>
+                    <option value="aac">AAC</option>
+                    <option value="m4a">M4A (Apple Music)</option>
+                    <option value="ogg">Ogg Vorbis</option>
+                    <option value="opus">Opus (Yüksek Verim)</option>
+                    <option value="flac">FLAC (Hi-Fi)</option>
+                    <option value="wma">WMA</option>
+                    <option value="aiff">AIFF</option>
+                    <option value="amr">AMR (Ses Kaydı)</option>
+                </optgroup>
+                <optgroup label="🖼️ Resim & Animasyon">
+                    <option value="gif">GIF (Animasyon)</option>
+                    <option value="webp">WebP (Modern Web)</option>
+                    <option value="apng">APNG</option>
+                    <option value="jpg">JPG</option>
+                    <option value="png">PNG</option>
+                    <option value="bmp">BMP</option>
+                    <option value="tiff">TIFF</option>
+                    <option value="ico">ICO (İkon)</option>
+                </optgroup>
+                <optgroup label="📽️ Profesyonel & Diğer">
+                    <option value="dv">DV</option>
+                    <option value="mxf">MXF</option>
+                    <option value="nut">NUT</option>
+                    <option value="ogv">OGV</option>
+                    <option value="rm">RealMedia</option>
+                    <option value="swf">SWF</option>
+                    <option value="y4m">Y4M</option>
+                </optgroup>
+            </select>
+        </div>
+        <div class="input-box">
+            <label>İşlem Modu</label>
+            <select id="quality">
+                <option value="28">Dengeli Sıkıştırma</option>
+                <option value="18">Maksimum Kalite</option>
+                <option value="35">Minimum Boyut (Eko)</option>
+            </select>
+        </div>
+    </div>
+
+    <button id="startBtn">TOPLU DÖNÜŞTÜRMEYİ BAŞLAT</button>
+    <div id="queueList"></div>
+</div>
+
+<script>
+    const { createFFmpeg, fetchFile } = FFmpeg;
+    const ffmpeg = createFFmpeg({ log: false, corePath: 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js' });
+
+    const fileInput = document.getElementById('fileInput');
+    const startBtn = document.getElementById('startBtn');
+    const queueList = document.getElementById('queueList');
+
+    fileInput.onchange = () => {
+        queueList.innerHTML = "";
+        [...fileInput.files].forEach((file, idx) => {
+            queueList.innerHTML += `
+                <div class="queue-item" id="item-${idx}">
+                    <div style="display:flex; justify-content: space-between">
+                        <span style="font-weight:bold">${file.name.substring(0,20)}...</span>
+                        <span id="percent-${idx}" style="color:#60a5fa">Bekliyor</span>
+                    </div>
+                    <div class="bar-container"><div class="progress-fill" id="bar-${idx}"></div></div>
+                </div>`;
+        });
+    };
+
+    startBtn.onclick = async () => {
+        const files = fileInput.files;
+        if(files.length === 0) return alert("Hoppa! Önce dosya seçmelisin.");
+        
+        startBtn.disabled = true;
+        if(!ffmpeg.isLoaded()) await ffmpeg.load();
+
+        const ext = document.getElementById('targetExt').value;
+        const q = document.getElementById('quality').value;
+
+        for(let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const bar = document.getElementById(`bar-${i}`);
+            const pText = document.getElementById(`percent-${i}`);
+            
+            pText.innerText = "%0";
+            ffmpeg.FS('writeFile', 'input', await fetchFile(file));
+
+            ffmpeg.setProgress(({ ratio }) => {
+                const p = Math.round(ratio * 100);
+                bar.style.width = p + '%';
+                pText.innerText = '%' + p;
+            });
+
+            let args = ['-i', 'input'];
+            
+            // Format Bazlı Akıllı Komut Setleri
+            if(ext === 'webm') {
+                // AV1 İÇİN ULTRA HIZ AYARI
+                args.push('-c:v', 'libaom-av1', '-crf', q, '-b:v', '0', '-cpu-used', '8', '-deadline', 'realtime', '-c:a', 'libopus');
+            } else if(ext === 'mp4') {
+                args.push('-c:v', 'libx264', '-crf', q, '-preset', 'ultrafast', '-c:a', 'aac');
+            } else if(['mp3', 'wav', 'flac', 'opus'].includes(ext)) {
+                args.push('-vn', '-ab', '192k');
+            } else if(ext === 'gif') {
+                args.push('-vf', 'fps=10,scale=480:-1:flags=lanczos');
+            } else {
+                args.push('-crf', q);
+            }
+
+            args.push('output.' + ext);
+
+            try {
+                await ffmpeg.run(...args);
+                const data = ffmpeg.FS('readFile', 'output.' + ext);
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(new Blob([data.buffer]));
+                a.download = `S24_Morph_${i}.${ext}`;
+                a.click();
+                pText.innerText = "İNDİRİLDİ";
+                bar.style.background = "#10b981";
+            } catch (e) {
+                pText.innerText = "HATA!";
+                console.error(e);
+            }
+        }
+        startBtn.disabled = false;
+    };
+</script>
+</body>
+</html>
     </div>
 
     <div class="controls">
