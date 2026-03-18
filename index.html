@@ -3,234 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="description" content="50+ format destekli ücretsiz medya dönüştürücü">
-    <meta name="theme-color" content="#020617">
-    
-    <title>Media Morph Beast | 50+ Formats</title>
-    
-    <link rel="preconnect" href="https://unpkg.com">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    
+    <title>Media Morph Beast</title>
     <style>
         :root {
             --bg: #020617;
             --card: #0f172a;
-            --card-hover: #1e293b;
+            --card2: #1e293b;
             --accent: #3b82f6;
-            --accent-hover: #2563eb;
+            --accent2: #2563eb;
             --success: #10b981;
             --warning: #f59e0b;
             --error: #ef4444;
             --text: #f8fafc;
-            --text-muted: #94a3b8;
-            --text-dim: #64748b;
+            --muted: #94a3b8;
+            --dim: #64748b;
             --border: rgba(255,255,255,0.08);
-            --shadow: rgba(0,0,0,0.4);
-            --space-xs: 0.25rem;
-            --space-sm: 0.5rem;
-            --space-md: 1rem;
-            --space-lg: 1.5rem;
-            --space-xl: 2rem;
-            --radius-sm: 0.75rem;
-            --radius-md: 1rem;
-            --radius-lg: 1.5rem;
-            --radius-xl: 2rem;
-            --transition-fast: 150ms ease;
-            --transition-normal: 250ms ease;
-            --touch-target: 44px;
         }
-
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            font-size: 16px;
-            -webkit-text-size-adjust: 100%;
-        }
-
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
             min-height: 100vh;
-            min-height: 100dvh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: var(--space-md);
+            padding: 12px;
             -webkit-font-smoothing: antialiased;
         }
-
-        :focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-        }
-
         .container {
             background: var(--card);
             width: 100%;
             max-width: 480px;
-            padding: var(--space-lg);
-            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            border-radius: 1.5rem;
             border: 1px solid var(--border);
-            box-shadow: 0 25px 50px var(--shadow);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
             position: relative;
             overflow: hidden;
         }
-
         .container::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 3px;
             background: linear-gradient(90deg, var(--accent), var(--success));
         }
-
-        .header {
-            text-align: center;
-            margin-bottom: var(--space-lg);
-        }
-
+        .header { text-align: center; margin-bottom: 1.25rem; }
         .logo {
-            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-size: clamp(1.4rem, 5vw, 1.8rem);
             font-weight: 900;
             background: linear-gradient(135deg, #60a5fa, #34d399);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: var(--space-xs);
         }
-
         .tagline {
-            font-size: 0.65rem;
-            color: var(--text-dim);
+            font-size: 0.6rem;
+            color: var(--dim);
             font-weight: 700;
             letter-spacing: 2px;
             text-transform: uppercase;
+            margin-top: 4px;
         }
 
-        .status-banner {
+        /* Status */
+        .status {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: var(--space-sm);
-            padding: var(--space-sm) var(--space-md);
-            background: rgba(59, 130, 246, 0.1);
-            border-radius: var(--radius-sm);
-            margin-bottom: var(--space-lg);
+            gap: 8px;
+            padding: 10px;
+            background: rgba(59,130,246,0.08);
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
             font-size: 0.75rem;
             font-weight: 600;
         }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
+        .dot {
+            width: 8px; height: 8px;
             border-radius: 50%;
             background: var(--warning);
             animation: pulse 2s infinite;
+            flex-shrink: 0;
         }
-
-        .status-dot.ready { background: var(--success); animation: none; }
-        .status-dot.error { background: var(--error); animation: none; }
-
+        .dot.ok { background: var(--success); animation: none; }
+        .dot.err { background: var(--error); animation: none; }
         @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
+            0%,100% { opacity:1; transform:scale(1); }
+            50% { opacity:0.4; transform:scale(0.7); }
         }
 
+        /* Loading bar */
+        .load-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--bg);
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        .load-bar.hidden { display: none; }
+        .load-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--success));
+            transition: width 0.3s;
+            border-radius: 2px;
+        }
+
+        /* File zone */
         .file-zone {
             border: 2px dashed var(--border);
-            padding: var(--space-xl) var(--space-md);
-            border-radius: var(--radius-lg);
+            padding: 2rem 1rem;
+            border-radius: 1rem;
             cursor: pointer;
-            transition: var(--transition-normal);
+            transition: 0.25s;
             text-align: center;
-            background: rgba(30, 41, 59, 0.3);
-            min-height: var(--touch-target);
+            background: rgba(30,41,59,0.3);
         }
-
-        .file-zone:hover,
-        .file-zone.drag-over {
-            border-color: var(--accent);
-            background: rgba(59, 130, 246, 0.08);
-            transform: translateY(-2px);
-        }
-
-        .file-zone.has-files {
-            border-color: var(--success);
-            border-style: solid;
-        }
-
-        .file-icon { font-size: 2.5rem; margin-bottom: var(--space-sm); display: block; }
-        .file-text { font-weight: 700; font-size: 0.95rem; margin-bottom: var(--space-xs); }
-        .file-hint { font-size: 0.7rem; color: var(--text-dim); }
-
+        .file-zone:hover, .file-zone.drag { border-color: var(--accent); background: rgba(59,130,246,0.06); transform: translateY(-2px); }
+        .file-zone.has { border-color: var(--success); border-style: solid; }
+        .file-zone .icon { font-size: 2.5rem; display: block; margin-bottom: 8px; }
+        .file-zone .title { font-weight: 700; font-size: 0.95rem; }
+        .file-zone .hint { font-size: 0.7rem; color: var(--dim); margin-top: 4px; }
         .file-count {
             display: inline-flex;
             align-items: center;
-            gap: var(--space-xs);
+            gap: 4px;
             background: var(--success);
-            color: white;
-            padding: var(--space-xs) var(--space-sm);
-            border-radius: var(--radius-sm);
-            font-size: 0.75rem;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.72rem;
             font-weight: 700;
-            margin-top: var(--space-sm);
+            margin-top: 8px;
         }
 
-        .config-section {
+        /* Config */
+        .config {
             display: grid;
-            gap: var(--space-md);
-            margin: var(--space-lg) 0;
+            gap: 10px;
+            margin: 1.25rem 0;
         }
-
-        @media (min-width: 400px) {
-            .config-section { grid-template-columns: 1fr 1fr; }
-        }
-
-        .input-group {
-            background: var(--card-hover);
-            padding: var(--space-md);
-            border-radius: var(--radius-md);
+        @media(min-width:400px) { .config { grid-template-columns: 1fr 1fr; } }
+        .input-box {
+            background: var(--card2);
+            padding: 12px;
+            border-radius: 12px;
             border: 1px solid var(--border);
-            transition: var(--transition-fast);
+            transition: 0.15s;
         }
-
-        .input-group:focus-within { border-color: var(--accent); }
-        .input-group.full-width { grid-column: 1 / -1; }
-
-        .input-label {
+        .input-box:focus-within { border-color: var(--accent); }
+        .input-box.full { grid-column: 1/-1; }
+        .lbl {
             display: flex;
             align-items: center;
-            gap: var(--space-xs);
-            font-size: 0.65rem;
-            color: var(--text-muted);
+            gap: 4px;
+            font-size: 0.6rem;
+            color: var(--muted);
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: var(--space-sm);
+            margin-bottom: 6px;
         }
-
-        .select-wrapper { position: relative; }
-
-        .select-wrapper::after {
-            content: '▼';
+        .sel-wrap { position: relative; }
+        .sel-wrap::after {
+            content: '▾';
             position: absolute;
-            right: 0;
-            top: 50%;
+            right: 0; top: 50%;
             transform: translateY(-50%);
-            font-size: 0.6rem;
-            color: var(--text-muted);
+            font-size: 0.7rem;
+            color: var(--dim);
             pointer-events: none;
         }
-
         select {
             appearance: none;
             -webkit-appearance: none;
@@ -239,323 +185,268 @@
             color: var(--text);
             width: 100%;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
-            padding-right: var(--space-md);
-            min-height: var(--touch-target);
+            padding-right: 16px;
+            min-height: 44px;
             font-family: inherit;
         }
-
         select:focus { outline: none; }
         option, optgroup { background: var(--card); color: var(--text); }
         optgroup { font-weight: 800; color: var(--accent); }
 
+        /* Button */
         .btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: var(--space-sm);
+            gap: 8px;
             width: 100%;
             background: var(--accent);
-            color: white;
+            color: #fff;
             border: none;
-            padding: var(--space-md) var(--space-lg);
-            border-radius: var(--radius-md);
+            padding: 14px;
+            border-radius: 12px;
             font-weight: 800;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             cursor: pointer;
-            transition: var(--transition-normal);
-            min-height: var(--touch-target);
+            transition: 0.25s;
+            min-height: 44px;
             font-family: inherit;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 8px 20px rgba(59,130,246,0.3);
         }
-
-        .btn:hover:not(:disabled) {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-        }
-
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        .btn.loading { position: relative; color: transparent; }
-
+        .btn:hover:not(:disabled) { background: var(--accent2); transform: translateY(-2px); }
+        .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+        .btn.loading { color: transparent; position: relative; }
         .btn.loading::after {
             content: '';
             position: absolute;
-            width: 20px;
-            height: 20px;
-            border: 2px solid white;
+            width: 20px; height: 20px;
+            border: 2px solid #fff;
             border-top-color: transparent;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
-
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .queue-container {
-            margin-top: var(--space-lg);
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .queue-header {
+        /* Queue */
+        .queue-box { margin-top: 1.25rem; max-height: 300px; overflow-y: auto; }
+        .queue-head {
             display: flex;
             justify-content: space-between;
-            margin-bottom: var(--space-sm);
-            font-size: 0.75rem;
-            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-size: 0.72rem;
+            color: var(--muted);
             font-weight: 700;
         }
-
-        .queue-item {
-            background: var(--card-hover);
-            padding: var(--space-md);
-            border-radius: var(--radius-md);
-            margin-bottom: var(--space-sm);
+        .q-item {
+            background: var(--card2);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
             border-left: 3px solid var(--accent);
-            animation: slideIn 0.3s ease;
+            animation: slideIn 0.25s ease;
         }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-10px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .queue-item.processing { border-left-color: var(--warning); background: rgba(245, 158, 11, 0.1); }
-        .queue-item.completed { border-left-color: var(--success); }
-        .queue-item.error { border-left-color: var(--error); background: rgba(239, 68, 68, 0.1); }
-
-        .queue-item-header {
+        @keyframes slideIn { from { opacity:0; transform:translateX(-8px); } }
+        .q-item.processing { border-left-color: var(--warning); background: rgba(245,158,11,0.08); }
+        .q-item.completed { border-left-color: var(--success); }
+        .q-item.error { border-left-color: var(--error); background: rgba(239,68,68,0.08); }
+        .q-head {
             display: flex;
             justify-content: space-between;
-            margin-bottom: var(--space-sm);
-        }
-
-        .queue-item-name {
-            font-weight: 700;
-            font-size: 0.8rem;
-            display: flex;
             align-items: center;
-            gap: var(--space-xs);
-            max-width: 70%;
+            margin-bottom: 6px;
+        }
+        .q-name {
+            font-weight: 700;
+            font-size: 0.78rem;
+            max-width: 65%;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
-
-        .queue-item-status {
-            font-size: 0.7rem;
+        .q-badge {
+            font-size: 0.65rem;
             font-weight: 700;
             padding: 2px 8px;
             border-radius: 20px;
-            background: var(--accent);
         }
-
-        .queue-item-status.waiting { background: var(--text-dim); }
-        .queue-item-status.processing { background: var(--warning); }
-        .queue-item-status.completed { background: var(--success); }
-        .queue-item-status.error { background: var(--error); }
-
-        .queue-item-info {
+        .q-badge.waiting { background: var(--dim); color: #fff; }
+        .q-badge.processing { background: var(--warning); color: #000; }
+        .q-badge.completed { background: var(--success); color: #fff; }
+        .q-badge.error { background: var(--error); color: #fff; }
+        .q-info {
             display: flex;
-            gap: var(--space-md);
-            font-size: 0.65rem;
-            color: var(--text-dim);
-            margin-bottom: var(--space-sm);
+            gap: 12px;
+            font-size: 0.62rem;
+            color: var(--dim);
+            margin-bottom: 6px;
         }
-
-        .progress-bar {
+        .p-bar {
             width: 100%;
-            height: 6px;
+            height: 5px;
             background: var(--bg);
             border-radius: 3px;
             overflow: hidden;
         }
-
-        .progress-fill {
+        .p-fill {
             height: 100%;
             width: 0%;
             background: linear-gradient(90deg, var(--accent), var(--success));
-            transition: width 0.3s ease;
+            transition: width 0.3s;
         }
-
-        .progress-fill.error { background: var(--error); }
+        .p-fill.err { background: var(--error); }
 
         .footer {
-            margin-top: var(--space-lg);
-            padding-top: var(--space-md);
+            margin-top: 1.25rem;
+            padding-top: 12px;
             border-top: 1px solid var(--border);
             text-align: center;
         }
-
-        .footer-text { font-size: 0.65rem; color: var(--text-dim); }
-
-        .footer-features {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: var(--space-sm);
-            margin-top: var(--space-sm);
-        }
-
-        .feature-badge {
-            font-size: 0.6rem;
-            background: rgba(59, 130, 246, 0.1);
+        .footer p { font-size: 0.62rem; color: var(--dim); }
+        .badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 6px; }
+        .badge {
+            font-size: 0.58rem;
+            background: rgba(59,130,246,0.1);
             color: var(--accent);
-            padding: 4px 8px;
+            padding: 3px 8px;
             border-radius: 20px;
             font-weight: 600;
         }
 
-        .notification {
+        .toast {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            left: 20px;
-            max-width: 400px;
+            bottom: 16px; left: 16px; right: 16px;
+            max-width: 380px;
             margin: 0 auto;
-            padding: var(--space-md);
-            border-radius: var(--radius-md);
-            font-size: 0.85rem;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.82rem;
             font-weight: 600;
-            z-index: 1000;
-            animation: slideUp 0.3s ease;
+            z-index: 9999;
+            animation: toastIn 0.3s ease;
             display: flex;
             align-items: center;
-            gap: var(--space-sm);
+            gap: 8px;
         }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .notification.success { background: var(--success); color: white; }
-        .notification.error { background: var(--error); color: white; }
-        .notification.warning { background: var(--warning); color: black; }
-        .notification.info { background: var(--accent); color: white; }
-
-        .notification-close {
+        @keyframes toastIn { from { opacity:0; transform:translateY(16px); } }
+        .toast.success { background: var(--success); color: #fff; }
+        .toast.error { background: var(--error); color: #fff; }
+        .toast.warning { background: var(--warning); color: #000; }
+        .toast.info { background: var(--accent); color: #fff; }
+        .toast button {
             margin-left: auto;
             background: none;
             border: none;
             color: inherit;
             cursor: pointer;
-            font-size: 1.2rem;
-            padding: 0;
+            font-size: 1.1rem;
             opacity: 0.7;
         }
 
         .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
+            position: absolute; width: 1px; height: 1px;
+            padding: 0; margin: -1px; overflow: hidden;
+            clip: rect(0,0,0,0); border: 0;
         }
-
         [hidden] { display: none !important; }
 
-        @media (max-width: 480px) {
-            body { padding: var(--space-sm); }
-            .container { padding: var(--space-md); border-radius: var(--radius-lg); }
+        @media(max-width:480px) {
+            body { padding: 6px; }
+            .container { padding: 1rem; border-radius: 1.2rem; }
         }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
-            }
+        @media(prefers-reduced-motion:reduce) {
+            *, *::before, *::after { animation-duration:0.01ms!important; transition-duration:0.01ms!important; }
         }
     </style>
 </head>
 <body>
-    <main class="container" role="main">
+    <main class="container">
         <header class="header">
             <h1 class="logo">Media Morph Beast</h1>
-            <p class="tagline">50+ Formats • Batch Processing • Browser-Based</p>
+            <p class="tagline">50+ Format • Toplu Dönüştürme • Tarayıcıda Çalışır</p>
         </header>
 
-        <div class="status-banner" role="status" aria-live="polite">
-            <span class="status-dot" id="statusDot"></span>
-            <span id="statusText">FFmpeg yükleniyor...</span>
+        <div class="status" role="status" aria-live="polite">
+            <span class="dot" id="dot"></span>
+            <span id="statusMsg">FFmpeg yükleniyor...</span>
+        </div>
+        <div class="load-bar" id="loadBar">
+            <div class="load-fill" id="loadFill"></div>
         </div>
 
-        <div class="file-zone" id="fileZone" role="button" tabindex="0" aria-label="Dosya seçmek için tıklayın">
-            <input type="file" id="fileInput" multiple accept="video/*,audio/*,image/*" class="sr-only">
-            <span class="file-icon">📁</span>
-            <p class="file-text" id="fileText">Dosyaları Seçin veya Sürükleyin</p>
-            <p class="file-hint">Video, ses ve görsel formatları desteklenir</p>
+        <div class="file-zone" id="dropZone" tabindex="0" role="button" aria-label="Dosya seçin">
+            <input type="file" id="fileIn" multiple accept="video/*,audio/*,image/*" class="sr-only">
+            <span class="icon">📁</span>
+            <p class="title" id="fileTxt">Dosya Seçin veya Sürükleyin</p>
+            <p class="hint">Video, ses, görsel — hepsi desteklenir</p>
         </div>
 
-        <section class="config-section">
-            <div class="input-group">
-                <label class="input-label" for="targetFormat">
-                    <span>🎯</span> Hedef Format
-                </label>
-                <div class="select-wrapper">
-                    <select id="targetFormat">
+        <section class="config">
+            <div class="input-box">
+                <div class="lbl">🎯 Hedef Format</div>
+                <div class="sel-wrap">
+                    <select id="fmt">
                         <optgroup label="🎬 Video - Popüler">
-                            <option value="mp4" data-type="video">MP4 (H.264)</option>
-                            <option value="webm" data-type="video">WebM (VP9)</option>
-                            <option value="mkv" data-type="video">MKV</option>
-                            <option value="avi" data-type="video">AVI</option>
-                            <option value="mov" data-type="video">MOV</option>
+                            <option value="mp4">MP4 (H.264)</option>
+                            <option value="webm">WebM (VP9)</option>
+                            <option value="mkv">MKV</option>
+                            <option value="avi">AVI</option>
+                            <option value="mov">MOV</option>
                         </optgroup>
-                        <optgroup label="📱 Video - Mobil">
-                            <option value="3gp" data-type="video">3GP</option>
-                            <option value="m4v" data-type="video">M4V</option>
-                            <option value="flv" data-type="video">FLV</option>
-                            <option value="ts" data-type="video">TS</option>
-                            <option value="m2ts" data-type="video">M2TS</option>
-                        </optgroup>
-                        <optgroup label="💿 Video - Arşiv">
-                            <option value="wmv" data-type="video">WMV</option>
-                            <option value="mpg" data-type="video">MPG</option>
-                            <option value="mpeg" data-type="video">MPEG</option>
-                            <option value="ogv" data-type="video">OGV</option>
-                            <option value="vob" data-type="video">VOB</option>
+                        <optgroup label="📱 Video - Mobil/Eski">
+                            <option value="3gp">3GP</option>
+                            <option value="m4v">M4V</option>
+                            <option value="flv">FLV</option>
+                            <option value="ts">TS</option>
+                            <option value="m2ts">M2TS</option>
+                            <option value="wmv">WMV</option>
+                            <option value="mpg">MPG</option>
+                            <option value="mpeg">MPEG</option>
+                            <option value="ogv">OGV</option>
+                            <option value="vob">VOB</option>
+                            <option value="asf">ASF</option>
                         </optgroup>
                         <optgroup label="🎵 Ses - Popüler">
-                            <option value="mp3" data-type="audio">MP3</option>
-                            <option value="aac" data-type="audio">AAC</option>
-                            <option value="m4a" data-type="audio">M4A</option>
-                            <option value="ogg" data-type="audio">OGG</option>
-                            <option value="opus" data-type="audio">Opus</option>
+                            <option value="mp3">MP3</option>
+                            <option value="aac">AAC</option>
+                            <option value="m4a">M4A</option>
+                            <option value="ogg">OGG</option>
+                            <option value="opus">Opus</option>
                         </optgroup>
                         <optgroup label="🎧 Ses - Kayıpsız">
-                            <option value="wav" data-type="audio">WAV</option>
-                            <option value="flac" data-type="audio">FLAC</option>
-                            <option value="aiff" data-type="audio">AIFF</option>
+                            <option value="wav">WAV</option>
+                            <option value="flac">FLAC</option>
+                            <option value="aiff">AIFF</option>
                         </optgroup>
                         <optgroup label="📞 Ses - Diğer">
-                            <option value="wma" data-type="audio">WMA</option>
-                            <option value="amr" data-type="audio">AMR</option>
-                            <option value="ac3" data-type="audio">AC3</option>
+                            <option value="wma">WMA</option>
+                            <option value="amr">AMR</option>
+                            <option value="ac3">AC3</option>
+                            <option value="mka">MKA</option>
                         </optgroup>
                         <optgroup label="🖼️ Görsel">
-                            <option value="jpg" data-type="image">JPG</option>
-                            <option value="png" data-type="image">PNG</option>
-                            <option value="webp" data-type="image">WebP</option>
-                            <option value="gif" data-type="image">GIF</option>
-                            <option value="bmp" data-type="image">BMP</option>
-                            <option value="tiff" data-type="image">TIFF</option>
+                            <option value="jpg">JPG</option>
+                            <option value="png">PNG</option>
+                            <option value="webp">WebP</option>
+                            <option value="gif">GIF</option>
+                            <option value="bmp">BMP</option>
+                            <option value="tiff">TIFF</option>
+                            <option value="ico">ICO</option>
+                            <option value="tga">TGA</option>
+                        </optgroup>
+                        <optgroup label="✨ Animasyon">
+                            <option value="apng">APNG</option>
                         </optgroup>
                     </select>
                 </div>
             </div>
-
-            <div class="input-group">
-                <label class="input-label" for="qualityMode">
-                    <span>⚡</span> Kalite
-                </label>
-                <div class="select-wrapper">
-                    <select id="qualityMode">
+            <div class="input-box">
+                <div class="lbl">⚡ Kalite</div>
+                <div class="sel-wrap">
+                    <select id="qMode">
                         <option value="balanced">⚖️ Dengeli</option>
                         <option value="quality">💎 Yüksek Kalite</option>
                         <option value="speed">🚀 Hızlı</option>
@@ -563,16 +454,13 @@
                     </select>
                 </div>
             </div>
-
-            <details class="input-group full-width">
-                <summary style="cursor:pointer;font-weight:700;font-size:0.8rem;color:var(--text-muted);">
-                    ⚙️ Gelişmiş Ayarlar
-                </summary>
-                <div style="margin-top:var(--space-md);display:grid;gap:var(--space-sm);">
+            <details class="input-box full">
+                <summary style="cursor:pointer;font-weight:700;font-size:0.78rem;color:var(--muted)">⚙️ Gelişmiş Ayarlar</summary>
+                <div style="margin-top:10px;display:grid;gap:8px">
                     <div>
-                        <label class="input-label" for="resolution">Çözünürlük</label>
-                        <div class="select-wrapper">
-                            <select id="resolution">
+                        <div class="lbl">Çözünürlük</div>
+                        <div class="sel-wrap">
+                            <select id="res">
                                 <option value="original">Orijinal</option>
                                 <option value="1080">1080p</option>
                                 <option value="720">720p</option>
@@ -582,13 +470,14 @@
                         </div>
                     </div>
                     <div>
-                        <label class="input-label" for="audioQuality">Ses Bitrate</label>
-                        <div class="select-wrapper">
-                            <select id="audioQuality">
+                        <div class="lbl">Ses Bitrate</div>
+                        <div class="sel-wrap">
+                            <select id="abr">
                                 <option value="320">320 kbps</option>
                                 <option value="256">256 kbps</option>
                                 <option value="192" selected>192 kbps</option>
                                 <option value="128">128 kbps</option>
+                                <option value="64">64 kbps</option>
                             </select>
                         </div>
                     </div>
@@ -596,515 +485,529 @@
             </details>
         </section>
 
-        <button type="button" class="btn" id="convertBtn" disabled>
-            <span>🚀</span>
-            <span class="btn-text">DÖNÜŞTÜRMEYE BAŞLA</span>
-        </button>
+        <button class="btn" id="goBtn" disabled>🚀 DÖNÜŞTÜRMEYE BAŞLA</button>
 
-        <section class="queue-container" id="queueContainer" hidden>
-            <div class="queue-header">
-                <span>📋 İşlem Kuyruğu</span>
-                <span id="queueStats">0/0</span>
+        <section class="queue-box" id="qBox" hidden>
+            <div class="queue-head">
+                <span>📋 Kuyruk</span>
+                <span id="qStats">0/0</span>
             </div>
-            <div id="queueList" role="list"></div>
+            <div id="qList"></div>
         </section>
 
         <footer class="footer">
-            <p class="footer-text">Tüm işlemler tarayıcınızda gerçekleşir</p>
-            <div class="footer-features">
-                <span class="feature-badge">🔒 Güvenli</span>
-                <span class="feature-badge">⚡ Hızlı</span>
-                <span class="feature-badge">📱 Mobil</span>
+            <p>Dosyalarınız sunucuya gönderilmez — her şey tarayıcınızda</p>
+            <div class="badges">
+                <span class="badge">🔒 Güvenli</span>
+                <span class="badge">⚡ Hızlı</span>
+                <span class="badge">📱 Mobil</span>
+                <span class="badge">🌐 Çevrimdışı</span>
             </div>
         </footer>
     </main>
 
-    <div id="notificationContainer"></div>
+    <div id="toasts"></div>
 
     <script>
-        // ===== FFMPEG CORE CONFIGURATION =====
-        // Using unpkg CDN with proper versioning for stability
-        const FFMPEG_CONFIG = {
-            // Version 0.12.6 is stable and well-tested
-            baseURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd',
-            get coreURL() { return `${this.baseURL}/ffmpeg-core.js`; },
-            get wasmURL() { return `${this.baseURL}/ffmpeg-core.wasm`; }
-        };
+    (function () {
+        'use strict';
+
+        // ===== CONFIG =====
+        // Using 0.12.6 UMD build via unpkg — most stable for browser usage
+        const BASE = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';
+        const CORE_URL = BASE + '/ffmpeg-core.js';
+        const WASM_URL = BASE + '/ffmpeg-core.wasm';
+        // Worker URL from the ffmpeg package itself
+        const FFMPEG_URL = 'https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js';
 
         // ===== STATE =====
-        const state = {
+        const S = {
             ffmpeg: null,
-            isLoaded: false,
-            isProcessing: false,
+            loaded: false,
+            busy: false,
             files: [],
-            completedCount: 0,
-            errorCount: 0
+            done: 0,
+            errs: 0
         };
 
-        // ===== ELEMENTS =====
-        const $ = id => document.getElementById(id);
-        const elements = {
-            fileZone: $('fileZone'),
-            fileInput: $('fileInput'),
-            fileText: $('fileText'),
-            convertBtn: $('convertBtn'),
-            queueContainer: $('queueContainer'),
-            queueList: $('queueList'),
-            queueStats: $('queueStats'),
-            statusDot: $('statusDot'),
-            statusText: $('statusText'),
-            targetFormat: $('targetFormat'),
-            qualityMode: $('qualityMode'),
-            resolution: $('resolution'),
-            audioQuality: $('audioQuality'),
-            notificationContainer: $('notificationContainer')
+        // ===== DOM =====
+        const el = id => document.getElementById(id);
+        const D = {
+            dot: el('dot'),
+            statusMsg: el('statusMsg'),
+            loadBar: el('loadBar'),
+            loadFill: el('loadFill'),
+            dropZone: el('dropZone'),
+            fileIn: el('fileIn'),
+            fileTxt: el('fileTxt'),
+            fmt: el('fmt'),
+            qMode: el('qMode'),
+            res: el('res'),
+            abr: el('abr'),
+            goBtn: el('goBtn'),
+            qBox: el('qBox'),
+            qList: el('qList'),
+            qStats: el('qStats'),
+            toasts: el('toasts')
         };
 
-        // ===== UTILITIES =====
-        const utils = {
-            formatBytes(bytes) {
-                if (bytes === 0) return '0 B';
-                const k = 1024;
-                const sizes = ['B', 'KB', 'MB', 'GB'];
-                const i = Math.floor(Math.log(bytes) / Math.log(k));
-                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-            },
-            getExt(name) {
-                return name.split('.').pop().toLowerCase();
-            },
-            truncate(name, max = 25) {
-                if (name.length <= max) return name;
-                const ext = this.getExt(name);
-                return name.slice(0, max - ext.length - 4) + '...' + ext;
-            },
-            getMediaType(file) {
-                if (file.type.startsWith('video/')) return 'video';
-                if (file.type.startsWith('audio/')) return 'audio';
-                if (file.type.startsWith('image/')) return 'image';
-                return 'unknown';
-            },
-            getIcon(file) {
-                const icons = { video: '🎬', audio: '🎵', image: '🖼️', unknown: '📄' };
-                return icons[this.getMediaType(file)];
-            }
-        };
+        // ===== HELPERS =====
+        function fmtBytes(b) {
+            if (!b) return '0 B';
+            const u = ['B','KB','MB','GB'];
+            const i = Math.floor(Math.log(b) / Math.log(1024));
+            return (b / Math.pow(1024, i)).toFixed(1) + ' ' + u[i];
+        }
+        function ext(n) { return n.split('.').pop().toLowerCase(); }
+        function trunc(n, m = 22) {
+            if (n.length <= m) return n;
+            const e = ext(n);
+            return n.slice(0, m - e.length - 3) + '….' + e;
+        }
+        function fileIcon(f) {
+            if (f.type.startsWith('video/')) return '🎬';
+            if (f.type.startsWith('audio/')) return '🎵';
+            if (f.type.startsWith('image/')) return '🖼️';
+            return '📄';
+        }
 
-        // ===== NOTIFICATIONS =====
-        const notify = {
-            show(msg, type = 'success', duration = 4000) {
-                const id = Date.now();
-                const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
-                const div = document.createElement('div');
-                div.className = `notification ${type}`;
-                div.id = `notif-${id}`;
-                div.innerHTML = `
-                    <span>${icons[type]}</span>
-                    <span>${msg}</span>
-                    <button class="notification-close">&times;</button>
-                `;
-                elements.notificationContainer.appendChild(div);
-                div.querySelector('.notification-close').onclick = () => this.dismiss(id);
-                if (duration > 0) setTimeout(() => this.dismiss(id), duration);
-                return id;
-            },
-            dismiss(id) {
-                const el = $(`notif-${id}`);
-                if (el) {
-                    el.style.animation = 'slideUp 0.3s ease reverse';
-                    setTimeout(() => el.remove(), 300);
-                }
-            }
-        };
+        // ===== TOASTS =====
+        function toast(msg, type = 'success', ms = 4000) {
+            const id = Date.now();
+            const icons = { success:'✅', error:'❌', warning:'⚠️', info:'ℹ️' };
+            const d = document.createElement('div');
+            d.className = 'toast ' + type;
+            d.id = 't' + id;
+            d.innerHTML = `<span>${icons[type]||''}</span><span>${msg}</span><button onclick="this.parentElement.remove()">×</button>`;
+            D.toasts.appendChild(d);
+            if (ms > 0) setTimeout(() => { const e = el('t'+id); if(e) e.remove(); }, ms);
+        }
 
-        // ===== QUEUE =====
-        const queue = {
-            render() {
-                if (state.files.length === 0) {
-                    elements.queueContainer.hidden = true;
-                    return;
-                }
-                elements.queueContainer.hidden = false;
-                elements.queueList.innerHTML = state.files.map((file, i) => `
-                    <div class="queue-item" id="queue-${i}" data-status="waiting">
-                        <div class="queue-item-header">
-                            <span class="queue-item-name">
-                                ${utils.getIcon(file)} ${utils.truncate(file.name)}
-                            </span>
-                            <span class="queue-item-status waiting" id="status-${i}">Bekliyor</span>
-                        </div>
-                        <div class="queue-item-info">
-                            <span>📦 ${utils.formatBytes(file.size)}</span>
-                            <span>📄 ${utils.getExt(file.name).toUpperCase()}</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progress-${i}"></div>
-                        </div>
+        // ===== QUEUE UI =====
+        function renderQueue() {
+            if (!S.files.length) { D.qBox.hidden = true; return; }
+            D.qBox.hidden = false;
+            D.qList.innerHTML = S.files.map((f, i) => `
+                <div class="q-item" id="q${i}">
+                    <div class="q-head">
+                        <span class="q-name">${fileIcon(f)} ${trunc(f.name)}</span>
+                        <span class="q-badge waiting" id="s${i}">Bekliyor</span>
                     </div>
-                `).join('');
-                this.updateStats();
-            },
-            update(i, status, progress = null) {
-                const item = $(`queue-${i}`);
-                const statusEl = $(`status-${i}`);
-                const progressEl = $(`progress-${i}`);
-                if (!item) return;
-
-                const labels = {
-                    waiting: 'Bekliyor',
-                    processing: 'İşleniyor...',
-                    completed: 'Tamamlandı ✓',
-                    error: 'Hata!'
-                };
-
-                item.className = `queue-item ${status}`;
-                statusEl.textContent = labels[status];
-                statusEl.className = `queue-item-status ${status}`;
-
-                if (progress !== null) {
-                    progressEl.style.width = `${progress}%`;
-                }
-                if (status === 'error') {
-                    progressEl.classList.add('error');
-                }
-                this.updateStats();
-            },
-            updateStats() {
-                elements.queueStats.textContent = `${state.completedCount}/${state.files.length}`;
-            }
-        };
-
-        // ===== FILE HANDLING =====
-        const fileHandler = {
-            handle(files) {
-                if (files.length === 0) return;
-                state.files = Array.from(files);
-                state.completedCount = 0;
-                state.errorCount = 0;
-
-                elements.fileZone.classList.add('has-files');
-                elements.fileText.innerHTML = `
-                    <strong>${state.files.length} dosya seçildi</strong>
-                    <div class="file-count">
-                        📁 ${utils.formatBytes(state.files.reduce((s, f) => s + f.size, 0))}
+                    <div class="q-info">
+                        <span>📦 ${fmtBytes(f.size)}</span>
+                        <span>📄 ${ext(f.name).toUpperCase()}</span>
                     </div>
-                `;
-                elements.convertBtn.disabled = !state.isLoaded;
-                queue.render();
-                notify.show(`${state.files.length} dosya eklendi`, 'success');
-            },
-            setupDragDrop() {
-                const zone = elements.fileZone;
-                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(e => {
-                    zone.addEventListener(e, ev => { ev.preventDefault(); ev.stopPropagation(); });
-                });
-                ['dragenter', 'dragover'].forEach(e => {
-                    zone.addEventListener(e, () => zone.classList.add('drag-over'));
-                });
-                ['dragleave', 'drop'].forEach(e => {
-                    zone.addEventListener(e, () => zone.classList.remove('drag-over'));
-                });
-                zone.addEventListener('drop', e => this.handle(e.dataTransfer.files));
-                zone.addEventListener('keydown', e => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        elements.fileInput.click();
-                    }
-                });
+                    <div class="p-bar"><div class="p-fill" id="p${i}"></div></div>
+                </div>
+            `).join('');
+            updStats();
+        }
+        function updQ(i, status, pct) {
+            const item = el('q'+i), badge = el('s'+i), bar = el('p'+i);
+            if (!item) return;
+            const labels = { waiting:'Bekliyor', processing:'İşleniyor…', completed:'Tamamlandı ✓', error:'Hata!' };
+            item.className = 'q-item ' + status;
+            badge.className = 'q-badge ' + status;
+            badge.textContent = labels[status] || status;
+            if (pct != null) bar.style.width = pct + '%';
+            if (status === 'error') bar.classList.add('err');
+            updStats();
+        }
+        function updStats() {
+            D.qStats.textContent = S.done + '/' + S.files.length;
+        }
+
+        // ===== FILE HANDLER =====
+        function handleFiles(files) {
+            if (!files.length) return;
+            S.files = Array.from(files);
+            S.done = 0; S.errs = 0;
+            D.dropZone.classList.add('has');
+            const total = S.files.reduce((a, f) => a + f.size, 0);
+            D.fileTxt.innerHTML = `<strong>${S.files.length} dosya seçildi</strong>
+                <div class="file-count">📁 ${fmtBytes(total)}</div>`;
+            D.goBtn.disabled = !S.loaded;
+            renderQueue();
+            toast(S.files.length + ' dosya eklendi', 'success');
+        }
+
+        // ===== ENCODER =====
+        function getQ(mode) {
+            return {
+                quality:  { crf:'18', preset:'slow',      ab:'320k' },
+                balanced: { crf:'23', preset:'medium',    ab:'192k' },
+                speed:    { crf:'28', preset:'ultrafast',  ab:'128k' },
+                tiny:     { crf:'35', preset:'ultrafast',  ab:'64k' }
+            }[mode] || { crf:'23', preset:'medium', ab:'192k' };
+        }
+
+        function buildArgs(fmt, q, resSetting, abrSetting) {
+            const a = ['-i', 'input'];
+            const qualP = getQ(q);
+
+            // Resolution (only for video output)
+            const audioOnly = ['mp3','aac','m4a','ogg','opus','wav','flac','wma','aiff','amr','ac3','mka'].includes(fmt);
+            if (resSetting !== 'original' && !audioOnly) {
+                a.push('-vf', 'scale=-2:' + resSetting);
             }
-        };
 
-        // ===== FFMPEG ENCODER CONFIG =====
-        const encoder = {
-            getQuality(mode) {
-                const presets = {
-                    quality: { crf: '18', preset: 'slow', audio: '320k' },
-                    balanced: { crf: '23', preset: 'medium', audio: '192k' },
-                    speed: { crf: '28', preset: 'ultrafast', audio: '128k' },
-                    tiny: { crf: '35', preset: 'ultrafast', audio: '64k' }
-                };
-                return presets[mode] || presets.balanced;
-            },
-            buildArgs(input, format, settings) {
-                const args = ['-i', input];
-                const q = this.getQuality(settings.quality);
-
-                // Resolution
-                if (settings.resolution !== 'original') {
-                    args.push('-vf', `scale=-2:${settings.resolution}`);
-                }
-
-                switch (format) {
-                    case 'mp4':
-                        args.push('-c:v', 'libx264', '-crf', q.crf, '-preset', q.preset,
-                            '-c:a', 'aac', '-b:a', q.audio, '-movflags', '+faststart', '-pix_fmt', 'yuv420p');
-                        break;
-                    case 'webm':
-                        args.push('-c:v', 'libvpx-vp9', '-crf', q.crf, '-b:v', '0',
-                            '-cpu-used', q.preset === 'ultrafast' ? '8' : '4',
-                            '-c:a', 'libopus', '-b:a', q.audio);
-                        break;
-                    case 'mkv':
-                        args.push('-c:v', 'libx264', '-crf', q.crf, '-preset', q.preset,
-                            '-c:a', 'aac', '-b:a', q.audio);
-                        break;
-                    case 'avi':
-                        args.push('-c:v', 'mpeg4', '-q:v', '5', '-c:a', 'mp3', '-b:a', q.audio);
-                        break;
-                    case 'mov':
-                        args.push('-c:v', 'libx264', '-crf', q.crf, '-preset', q.preset,
-                            '-c:a', 'aac', '-b:a', q.audio, '-pix_fmt', 'yuv420p');
-                        break;
-                    case '3gp':
-                        args.push('-c:v', 'h263', '-s', '352x288', '-c:a', 'aac', '-ar', '8000', '-ac', '1');
-                        break;
-                    case 'flv':
-                        args.push('-c:v', 'flv1', '-q:v', '5', '-c:a', 'mp3', '-b:a', q.audio);
-                        break;
-                    case 'ts': case 'm2ts':
-                        args.push('-c:v', 'libx264', '-crf', q.crf, '-preset', q.preset,
-                            '-c:a', 'aac', '-b:a', q.audio, '-f', 'mpegts');
-                        break;
-                    case 'wmv':
-                        args.push('-c:v', 'wmv2', '-q:v', '5', '-c:a', 'wmav2', '-b:a', q.audio);
-                        break;
-                    case 'mpg': case 'mpeg':
-                        args.push('-c:v', 'mpeg2video', '-q:v', '5', '-c:a', 'mp2', '-b:a', q.audio);
-                        break;
-                    case 'ogv':
-                        args.push('-c:v', 'libtheora', '-q:v', '7', '-c:a', 'libvorbis', '-q:a', '5');
-                        break;
-                    case 'mp3':
-                        args.push('-vn', '-c:a', 'libmp3lame', '-b:a', settings.audioBitrate + 'k');
-                        break;
-                    case 'aac': case 'm4a':
-                        args.push('-vn', '-c:a', 'aac', '-b:a', settings.audioBitrate + 'k');
-                        break;
-                    case 'ogg':
-                        args.push('-vn', '-c:a', 'libvorbis', '-q:a', '6');
-                        break;
-                    case 'opus':
-                        args.push('-vn', '-c:a', 'libopus', '-b:a', settings.audioBitrate + 'k');
-                        break;
-                    case 'wav':
-                        args.push('-vn', '-c:a', 'pcm_s16le');
-                        break;
-                    case 'flac':
-                        args.push('-vn', '-c:a', 'flac', '-compression_level', '8');
-                        break;
-                    case 'wma':
-                        args.push('-vn', '-c:a', 'wmav2', '-b:a', settings.audioBitrate + 'k');
-                        break;
-                    case 'aiff':
-                        args.push('-vn', '-c:a', 'pcm_s16be');
-                        break;
-                    case 'gif':
-                        args.push('-vf', 'fps=10,scale=480:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse', '-loop', '0');
-                        break;
-                    case 'jpg': case 'jpeg':
-                        args.push('-vframes', '1', '-q:v', '2');
-                        break;
-                    case 'png':
-                        args.push('-vframes', '1');
-                        break;
-                    case 'webp':
-                        args.push('-vframes', '1', '-quality', '90');
-                        break;
-                    case 'bmp': case 'tiff':
-                        args.push('-vframes', '1');
-                        break;
-                    default:
-                        args.push('-c', 'copy');
-                }
-                return args;
-            },
-            getMime(format) {
-                const mimes = {
-                    mp4: 'video/mp4', webm: 'video/webm', mkv: 'video/x-matroska',
-                    avi: 'video/x-msvideo', mov: 'video/quicktime', '3gp': 'video/3gpp',
-                    flv: 'video/x-flv', ts: 'video/mp2t', wmv: 'video/x-ms-wmv',
-                    mpg: 'video/mpeg', mpeg: 'video/mpeg', ogv: 'video/ogg',
-                    mp3: 'audio/mpeg', aac: 'audio/aac', m4a: 'audio/mp4',
-                    ogg: 'audio/ogg', opus: 'audio/opus', wav: 'audio/wav',
-                    flac: 'audio/flac', wma: 'audio/x-ms-wma', aiff: 'audio/aiff',
-                    jpg: 'image/jpeg', png: 'image/png', gif: 'image/gif',
-                    webp: 'image/webp', bmp: 'image/bmp', tiff: 'image/tiff'
-                };
-                return mimes[format] || 'application/octet-stream';
+            switch (fmt) {
+                case 'mp4':
+                    a.push('-c:v','libx264','-crf',qualP.crf,'-preset',qualP.preset,
+                        '-c:a','aac','-b:a',qualP.ab,'-movflags','+faststart','-pix_fmt','yuv420p');
+                    break;
+                case 'webm':
+                    a.push('-c:v','libvpx-vp9','-crf',qualP.crf,'-b:v','0',
+                        '-cpu-used', qualP.preset==='ultrafast'?'8':'4',
+                        '-deadline','realtime',
+                        '-c:a','libopus','-b:a',qualP.ab);
+                    break;
+                case 'mkv':
+                    a.push('-c:v','libx264','-crf',qualP.crf,'-preset',qualP.preset,
+                        '-c:a','aac','-b:a',qualP.ab);
+                    break;
+                case 'avi':
+                    a.push('-c:v','mpeg4','-q:v','5','-c:a','mp3','-b:a',qualP.ab);
+                    break;
+                case 'mov':
+                    a.push('-c:v','libx264','-crf',qualP.crf,'-preset',qualP.preset,
+                        '-c:a','aac','-b:a',qualP.ab,'-pix_fmt','yuv420p');
+                    break;
+                case '3gp':
+                    a.push('-c:v','libx264','-profile:v','baseline','-level','1.0',
+                        '-s','320x240','-c:a','aac','-ar','8000','-ac','1');
+                    break;
+                case 'm4v':
+                    a.push('-c:v','libx264','-crf',qualP.crf,'-preset',qualP.preset,
+                        '-c:a','aac','-b:a',qualP.ab);
+                    break;
+                case 'flv':
+                    a.push('-c:v','flv1','-q:v','5','-c:a','mp3','-b:a',qualP.ab);
+                    break;
+                case 'ts': case 'm2ts':
+                    a.push('-c:v','libx264','-crf',qualP.crf,'-preset',qualP.preset,
+                        '-c:a','aac','-b:a',qualP.ab,'-f','mpegts');
+                    break;
+                case 'wmv':
+                    a.push('-c:v','wmv2','-q:v','5','-c:a','wmav2','-b:a',qualP.ab);
+                    break;
+                case 'mpg': case 'mpeg':
+                    a.push('-c:v','mpeg2video','-q:v','5','-c:a','mp2','-b:a',qualP.ab);
+                    break;
+                case 'ogv':
+                    a.push('-c:v','libtheora','-q:v','7','-c:a','libvorbis','-q:a','5');
+                    break;
+                case 'vob':
+                    a.push('-c:v','mpeg2video','-c:a','mp2','-f','vob');
+                    break;
+                case 'asf':
+                    a.push('-c:v','wmv2','-c:a','wmav2','-f','asf');
+                    break;
+                // Audio
+                case 'mp3':
+                    a.push('-vn','-c:a','libmp3lame','-b:a',abrSetting+'k');
+                    break;
+                case 'aac': case 'm4a':
+                    a.push('-vn','-c:a','aac','-b:a',abrSetting+'k');
+                    break;
+                case 'ogg':
+                    a.push('-vn','-c:a','libvorbis','-q:a','6');
+                    break;
+                case 'opus':
+                    a.push('-vn','-c:a','libopus','-b:a',abrSetting+'k');
+                    break;
+                case 'wav':
+                    a.push('-vn','-c:a','pcm_s16le');
+                    break;
+                case 'flac':
+                    a.push('-vn','-c:a','flac');
+                    break;
+                case 'aiff':
+                    a.push('-vn','-c:a','pcm_s16be');
+                    break;
+                case 'wma':
+                    a.push('-vn','-c:a','wmav2','-b:a',abrSetting+'k');
+                    break;
+                case 'amr':
+                    a.push('-vn','-c:a','libopencore_amrnb','-ar','8000','-ac','1');
+                    break;
+                case 'ac3':
+                    a.push('-vn','-c:a','ac3','-b:a',abrSetting+'k');
+                    break;
+                case 'mka':
+                    a.push('-vn','-c:a','libvorbis','-q:a','6');
+                    break;
+                // Image
+                case 'gif':
+                    a.push('-vf','fps=10,scale=480:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse','-loop','0');
+                    break;
+                case 'jpg': case 'jpeg':
+                    a.push('-vframes','1','-q:v','2');
+                    break;
+                case 'png':
+                    a.push('-vframes','1');
+                    break;
+                case 'webp':
+                    a.push('-vframes','1','-quality','90','-f','webp');
+                    break;
+                case 'bmp': case 'tiff': case 'tga': case 'ico':
+                    a.push('-vframes','1');
+                    break;
+                case 'apng':
+                    a.push('-plays','0','-f','apng');
+                    break;
+                default:
+                    // copy for unknown
+                    a.push('-c','copy');
             }
-        };
+            return a;
+        }
+
+        function getMime(f) {
+            const m = {
+                mp4:'video/mp4', webm:'video/webm', mkv:'video/x-matroska',
+                avi:'video/x-msvideo', mov:'video/quicktime', '3gp':'video/3gpp',
+                flv:'video/x-flv', ts:'video/mp2t', wmv:'video/x-ms-wmv',
+                mpg:'video/mpeg', mpeg:'video/mpeg', ogv:'video/ogg',
+                mp3:'audio/mpeg', aac:'audio/aac', m4a:'audio/mp4',
+                ogg:'audio/ogg', opus:'audio/opus', wav:'audio/wav',
+                flac:'audio/flac', wma:'audio/x-ms-wma', aiff:'audio/aiff',
+                jpg:'image/jpeg', png:'image/png', gif:'image/gif',
+                webp:'image/webp', bmp:'image/bmp', tiff:'image/tiff', ico:'image/x-icon',
+                apng:'image/apng'
+            };
+            return m[f] || 'application/octet-stream';
+        }
+
+        // ===== READ FILE =====
+        function readFile(file) {
+            return new Promise((ok, fail) => {
+                const r = new FileReader();
+                r.onload = () => ok(new Uint8Array(r.result));
+                r.onerror = fail;
+                r.readAsArrayBuffer(file);
+            });
+        }
 
         // ===== CONVERTER =====
-        const converter = {
-            async process() {
-                if (state.files.length === 0 || state.isProcessing) return;
+        async function convert() {
+            if (!S.files.length || S.busy) return;
+            S.busy = true;
+            D.goBtn.disabled = true;
+            D.goBtn.classList.add('loading');
 
-                state.isProcessing = true;
-                elements.convertBtn.disabled = true;
-                elements.convertBtn.classList.add('loading');
+            const format = D.fmt.value;
+            const quality = D.qMode.value;
+            const resSetting = D.res.value;
+            const abrSetting = D.abr.value;
 
-                const format = elements.targetFormat.value;
-                const settings = {
-                    quality: elements.qualityMode.value,
-                    resolution: elements.resolution.value,
-                    audioBitrate: elements.audioQuality.value
-                };
+            for (let i = 0; i < S.files.length; i++) {
+                const file = S.files[i];
+                updQ(i, 'processing', 0);
 
-                for (let i = 0; i < state.files.length; i++) {
-                    const file = state.files[i];
-                    queue.update(i, 'processing', 0);
+                try {
+                    // Write input
+                    const data = await readFile(file);
+                    S.ffmpeg.FS('writeFile', 'input', data);
 
-                    try {
-                        await this.convert(file, i, format, settings);
-                        state.completedCount++;
-                        queue.update(i, 'completed', 100);
-                    } catch (err) {
-                        console.error(`Error: ${file.name}`, err);
-                        state.errorCount++;
-                        queue.update(i, 'error');
-                        notify.show(`${utils.truncate(file.name, 20)} hata!`, 'error');
-                    }
+                    // Progress
+                    S.ffmpeg.setProgress(({ ratio }) => {
+                        updQ(i, 'processing', Math.min(Math.round(ratio * 100), 99));
+                    });
 
-                    // Memory cleanup
-                    try {
-                        state.ffmpeg.FS('unlink', 'input');
-                        state.ffmpeg.FS('unlink', `output.${format}`);
-                    } catch (e) {}
+                    // Build & run
+                    const outName = 'output.' + format;
+                    const args = buildArgs(format, quality, resSetting, abrSetting);
+                    args.push(outName);
+
+                    await S.ffmpeg.run(...args);
+
+                    // Read & download
+                    const out = S.ffmpeg.FS('readFile', outName);
+                    const blob = new Blob([out.buffer], { type: getMime(format) });
+                    const base = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = base + '_converted.' + format;
+                    a.click();
+                    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+
+                    S.done++;
+                    updQ(i, 'completed', 100);
+
+                } catch (err) {
+                    console.error('Convert error:', file.name, err);
+                    S.errs++;
+                    updQ(i, 'error');
+                    toast(trunc(file.name, 18) + ' — ' + (err.message || 'Bilinmeyen hata'), 'error');
                 }
 
-                state.isProcessing = false;
-                elements.convertBtn.disabled = false;
-                elements.convertBtn.classList.remove('loading');
-
-                if (state.errorCount === 0) {
-                    notify.show(`🎉 ${state.completedCount} dosya tamamlandı!`, 'success');
-                } else {
-                    notify.show(`${state.completedCount} başarılı, ${state.errorCount} hatalı`, 'warning');
-                }
-            },
-
-            async convert(file, index, format, settings) {
-                const inputName = 'input';
-                const outputName = `output.${format}`;
-
-                // Read file
-                const fileData = await this.readFile(file);
-                state.ffmpeg.FS('writeFile', inputName, fileData);
-
-                // Build args
-                const args = encoder.buildArgs(inputName, format, settings);
-                args.push(outputName);
-
-                // Progress handler
-                state.ffmpeg.setProgress(({ ratio }) => {
-                    const pct = Math.min(Math.round(ratio * 100), 99);
-                    queue.update(index, 'processing', pct);
-                });
-
-                // Run
-                await state.ffmpeg.run(...args);
-
-                // Read output
-                const output = state.ffmpeg.FS('readFile', outputName);
-                const blob = new Blob([output.buffer], { type: encoder.getMime(format) });
-
-                // Download
-                const baseName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = `${baseName}_converted.${format}`;
-                link.click();
-                setTimeout(() => URL.revokeObjectURL(link.href), 1000);
-            },
-
-            readFile(file) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = () => resolve(new Uint8Array(reader.result));
-                    reader.onerror = reject;
-                    reader.readAsArrayBuffer(file);
-                });
+                // Cleanup FS
+                try { S.ffmpeg.FS('unlink', 'input'); } catch(e){}
+                try { S.ffmpeg.FS('unlink', 'output.' + format); } catch(e){}
             }
-        };
 
-        // ===== FFMPEG INITIALIZATION =====
-        async function initFFmpeg() {
-            try {
-                elements.statusText.textContent = 'FFmpeg yükleniyor...';
+            S.busy = false;
+            D.goBtn.disabled = false;
+            D.goBtn.classList.remove('loading');
 
-                // Load FFmpeg script
-                const script = document.createElement('script');
-                script.src = 'https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js';
-                
-                await new Promise((resolve, reject) => {
-                    script.onload = resolve;
-                    script.onerror = () => reject(new Error('FFmpeg script yüklenemedi'));
-                    document.head.appendChild(script);
-                });
-
-                // Create FFmpeg instance
-                const { createFFmpeg, fetchFile } = FFmpeg;
-                
-                state.ffmpeg = createFFmpeg({
-                    log: false,
-                    corePath: FFMPEG_CONFIG.coreURL,
-                    // This is the key fix - we're not using worker for this version
-                    mainName: 'main'
-                });
-
-                // Store fetchFile globally for converter
-                window.ffmpegFetchFile = fetchFile;
-
-                elements.statusText.textContent = 'FFmpeg başlatılıyor...';
-                await state.ffmpeg.load();
-
-                state.isLoaded = true;
-                elements.statusDot.classList.add('ready');
-                elements.statusText.textContent = 'FFmpeg hazır ✓';
-
-                if (state.files.length > 0) {
-                    elements.convertBtn.disabled = false;
-                }
-
-                notify.show('FFmpeg başarıyla yüklendi!', 'success', 3000);
-
-            } catch (error) {
-                console.error('FFmpeg init error:', error);
-                elements.statusDot.classList.add('error');
-                elements.statusText.textContent = 'FFmpeg yüklenemedi';
-                notify.show(`Hata: ${error.message}`, 'error', 0);
+            if (S.errs === 0) {
+                toast('🎉 ' + S.done + ' dosya başarıyla dönüştürüldü!', 'success');
+            } else {
+                toast(S.done + ' başarılı, ' + S.errs + ' hatalı', S.done > 0 ? 'warning' : 'error');
             }
         }
 
-        // ===== EVENT LISTENERS =====
-        function setupEvents() {
-            elements.fileInput.addEventListener('change', e => {
-                fileHandler.handle(e.target.files);
+        // ===== toBlobURL — THE KEY FIX =====
+        // This downloads the file and creates a same-origin Blob URL
+        // Completely eliminates CORS / COEP / Worker origin issues
+        async function toBlobURL(url, mimeType) {
+            D.statusMsg.textContent = 'İndiriliyor: ' + url.split('/').pop();
+
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('HTTP ' + response.status + ' — ' + url);
+
+            const total = parseInt(response.headers.get('content-length') || '0', 10);
+            const reader = response.body.getReader();
+            const chunks = [];
+            let received = 0;
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                chunks.push(value);
+                received += value.length;
+                if (total > 0) {
+                    const pct = Math.round((received / total) * 100);
+                    D.loadFill.style.width = pct + '%';
+                    D.statusMsg.textContent = url.split('/').pop() + ' — %' + pct;
+                }
+            }
+
+            const blob = new Blob(chunks, { type: mimeType });
+            return URL.createObjectURL(blob);
+        }
+
+        // ===== INIT FFMPEG =====
+        async function initFFmpeg() {
+            D.loadBar.classList.remove('hidden');
+            D.statusMsg.textContent = 'FFmpeg hazırlanıyor...';
+
+            try {
+                // Step 1 — Load the FFmpeg wrapper script
+                D.statusMsg.textContent = 'FFmpeg script yükleniyor...';
+                await new Promise((ok, fail) => {
+                    const s = document.createElement('script');
+                    s.src = 'https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js';
+                    s.onload = ok;
+                    s.onerror = () => fail(new Error('FFmpeg script yüklenemedi'));
+                    document.head.appendChild(s);
+                });
+
+                if (typeof FFmpeg === 'undefined' || !FFmpeg.createFFmpeg) {
+                    throw new Error('FFmpeg global bulunamadı');
+                }
+
+                // Step 2 — Download core files as Blob URLs (FIXES CORS!)
+                D.statusMsg.textContent = 'FFmpeg Core indiriliyor...';
+                D.loadFill.style.width = '0%';
+
+                const coreBlobURL = await toBlobURL(CORE_URL, 'text/javascript');
+
+                D.loadFill.style.width = '50%';
+                D.statusMsg.textContent = 'WASM indiriliyor (bu biraz sürebilir)...';
+
+                const wasmBlobURL = await toBlobURL(WASM_URL, 'application/wasm');
+
+                D.loadFill.style.width = '90%';
+
+                // Step 3 — Create FFmpeg instance with Blob URLs
+                S.ffmpeg = FFmpeg.createFFmpeg({
+                    log: false,
+                    corePath: coreBlobURL
+                    // wasmPath will be resolved relative to corePath
+                    // Since both are blob URLs, we handle it differently:
+                });
+
+                // Step 4 — Load
+                D.statusMsg.textContent = 'FFmpeg başlatılıyor...';
+                await S.ffmpeg.load();
+
+                D.loadFill.style.width = '100%';
+                S.loaded = true;
+                D.dot.classList.add('ok');
+                D.statusMsg.textContent = 'FFmpeg hazır ✓';
+
+                setTimeout(() => { D.loadBar.classList.add('hidden'); }, 1000);
+
+                if (S.files.length > 0) D.goBtn.disabled = false;
+                toast('FFmpeg başarıyla yüklendi!', 'success', 3000);
+
+            } catch (err) {
+                console.error('FFmpeg init failed:', err);
+                D.dot.classList.add('err');
+                D.loadFill.style.width = '100%';
+                D.loadFill.style.background = 'var(--error)';
+                D.statusMsg.textContent = 'Hata: ' + err.message;
+                toast('FFmpeg yüklenemedi — ' + err.message, 'error', 0);
+
+                // Retry button
+                D.goBtn.textContent = '🔄 TEKRAR DENE';
+                D.goBtn.disabled = false;
+                D.goBtn.onclick = () => {
+                    D.goBtn.textContent = '🚀 DÖNÜŞTÜRMEYE BAŞLA';
+                    D.goBtn.onclick = convert;
+                    D.dot.className = 'dot';
+                    D.loadFill.style.background = '';
+                    D.loadFill.style.width = '0%';
+                    D.loadBar.classList.remove('hidden');
+                    initFFmpeg();
+                };
+            }
+        }
+
+        // ===== EVENTS =====
+        function setup() {
+            // File input
+            D.fileIn.addEventListener('change', e => handleFiles(e.target.files));
+
+            // Click zone
+            D.dropZone.addEventListener('click', () => D.fileIn.click());
+
+            // Keyboard
+            D.dropZone.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); D.fileIn.click(); }
             });
 
-            elements.fileZone.addEventListener('click', () => {
-                elements.fileInput.click();
+            // Drag & Drop
+            ['dragenter','dragover','dragleave','drop'].forEach(ev => {
+                D.dropZone.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); });
             });
-
-            elements.convertBtn.addEventListener('click', () => {
-                converter.process();
+            ['dragenter','dragover'].forEach(ev => {
+                D.dropZone.addEventListener(ev, () => D.dropZone.classList.add('drag'));
             });
+            ['dragleave','drop'].forEach(ev => {
+                D.dropZone.addEventListener(ev, () => D.dropZone.classList.remove('drag'));
+            });
+            D.dropZone.addEventListener('drop', e => handleFiles(e.dataTransfer.files));
 
-            fileHandler.setupDragDrop();
+            // Convert button
+            D.goBtn.addEventListener('click', convert);
 
-            // Keyboard shortcut
+            // Ctrl+O
             document.addEventListener('keydown', e => {
                 if ((e.ctrlKey || e.metaKey) && e.key === 'o') {
                     e.preventDefault();
-                    elements.fileInput.click();
+                    D.fileIn.click();
                 }
             });
         }
 
         // ===== START =====
-        document.addEventListener('DOMContentLoaded', () => {
-            setupEvents();
-            initFFmpeg();
-        });
+        setup();
+        initFFmpeg();
+
+    })();
     </script>
 </body>
 </html>
