@@ -3,187 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Media Morph Pro | S24 Edition</title>
+    <title>Media Morph Pro</title>
     <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #020617; color: #f8fafc; }
-        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.1); }
-        .neon-glow { box-shadow: 0 0 40px rgba(59, 130, 246, 0.2); }
-        select { -webkit-appearance: none; appearance: none; }
-        .gradient-text { background: linear-gradient(90deg, #60a5fa, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        :root { --bg: #030712; --card: #0f172a; --accent: #3b82f6; --text: #f8fafc; }
+        body { margin: 0; font-family: sans-serif; background: var(--bg); color: var(--text); display: flex; align-items: center; justify-content: center; min-height: screen; height: 100vh; }
+        .container { background: var(--card); width: 90%; max-width: 400px; padding: 2rem; border-radius: 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05); text-align: center; }
+        h1 { font-size: 1.8rem; font-weight: 900; margin: 0; background: linear-gradient(90deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p { color: #64748b; font-size: 0.7rem; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 1px; }
+        .file-zone { border: 2px dashed #1e293b; padding: 2rem; border-radius: 1.5rem; cursor: pointer; transition: 0.3s; margin-bottom: 1.5rem; }
+        .file-zone:hover { border-color: var(--accent); background: rgba(59, 130, 246, 0.05); }
+        .controls { display: grid; grid-template-cols: 1fr 1fr; gap: 10px; margin-bottom: 1.5rem; }
+        .control-group { background: #1e293b; padding: 10px; border-radius: 1rem; text-align: left; }
+        label { font-size: 10px; color: #94a3b8; font-weight: bold; display: block; margin-bottom: 5px; }
+        select { background: none; border: none; color: white; width: 100%; font-weight: bold; outline: none; }
+        button { width: 100%; background: var(--accent); color: white; border: none; padding: 1.2rem; border-radius: 1.2rem; font-weight: 900; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2); }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        #progressBox { margin-top: 1.5rem; }
+        .bar-bg { width: 100%; background: #1e293b; height: 6px; border-radius: 10px; margin-top: 10px; overflow: hidden; }
+        #bar { width: 0%; height: 100%; background: var(--accent); transition: 0.3s; }
+        .status-text { font-size: 10px; font-weight: bold; color: var(--accent); }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body>
 
-    <div class="glass w-full max-w-lg rounded-[2.5rem] p-8 md:p-12 neon-glow transition-all duration-500">
-        
-        <header class="text-center mb-10">
-            <h1 class="text-4xl font-black tracking-tighter gradient-text">Media Morph Pro</h1>
-            <p class="text-slate-500 text-xs mt-2 uppercase font-bold tracking-[0.2em]">Cihazda Yerel Dönüşüm</p>
-        </header>
+<div class="container">
+    <h1>Media Morph Pro</h1>
+    <p>S24 Ultra Native Engine</p>
 
-        <div class="space-y-6">
-            <div class="group relative">
-                <input type="file" id="fileInput" class="hidden">
-                <label for="fileInput" class="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-slate-700 rounded-[2rem] bg-slate-900/40 hover:bg-slate-800/60 hover:border-blue-500 transition-all cursor-pointer">
-                    <div id="fileInfo" class="text-center">
-                        <span class="text-3xl block mb-2">📥</span>
-                        <span class="text-slate-400 font-bold text-sm">Dosyayı Seçin</span>
-                    </div>
-                </label>
-            </div>
+    <input type="file" id="fileInput" style="display:none">
+    <div class="file-zone" onclick="document.getElementById('fileInput').click()">
+        <div id="fileInfo" style="font-weight: bold; font-size: 0.9rem;">📥 Dosyayı Seç</div>
+    </div>
 
-            <div class="grid grid-cols-2 gap-4">
-                <div class="bg-slate-900/60 p-4 rounded-3xl border border-slate-800">
-                    <label class="text-[10px] text-slate-500 font-black mb-2 block uppercase">Format</label>
-                    <select id="format" class="bg-transparent w-full font-bold text-sm outline-none cursor-pointer">
-                        <option value="mp4">MP4</option>
-                        <option value="webm">AV1 (WebM)</option>
-                        <option value="gif">GIF</option>
-                        <option value="mp3">MP3</option>
-                    </select>
-                </div>
-                <div class="bg-slate-900/60 p-4 rounded-3xl border border-slate-800">
-                    <label class="text-[10px] text-slate-500 font-black mb-2 block uppercase">Kalite</label>
-                    <select id="quality" class="bg-transparent w-full font-bold text-sm outline-none cursor-pointer">
-                        <option value="23">Dengeli</option>
-                        <option value="18">Ultra</option>
-                        <option value="32">Eko</option>
-                    </select>
-                </div>
-            </div>
-
-            <button id="convertBtn" class="w-full h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-[1.5rem] font-black text-white shadow-xl hover:shadow-blue-500/20 active:scale-95 transition-all">
-                DÖNÜŞTÜRMEYİ BAŞLAT
-            </button>
-
-            <div id="progressBox" class="hidden animate-in fade-in slide-in-from-bottom-4">
-                <div class="flex justify-between mb-2">
-                    <span id="status" class="text-[10px] font-black text-blue-400 uppercase italic">İşleniyor...</span>
-                    <span id="percent" class="text-[10px] font-black">0%</span>
-                </div>
-                <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                    <div id="bar" class="bg-blue-500 h-full w-0 transition-all duration-300"></div>
-                </div>
-            </div>
+    <div class="controls">
+        <div class="control-group">
+            <label>FORMAT</label>
+            <select id="format">
+                <option value="mp4">MP4</option>
+                <option value="webm">AV1</option>
+                <option value="gif">GIF</option>
+                <option value="mp3">MP3</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label>KALİTE</label>
+            <select id="quality">
+                <option value="23">Dengeli</option>
+                <option value="18">Ultra</option>
+                <option value="32">Küçük</option>
+            </select>
         </div>
     </div>
 
-    <script>
-        const { createFFmpeg, fetchFile } = FFmpeg;
-        const ffmpeg = createFFmpeg({
-            log: false,
-            corePath: 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js'
+    <button id="convertBtn">DÖNÜŞTÜRMEYİ BAŞLAT</button>
+
+    <div id="progressBox" style="display:none">
+        <div style="display:flex; justify-content: space-between">
+            <span id="status" class="status-text">HAZIRLANIYOR...</span>
+            <span id="percent" style="font-size: 10px; font-weight: bold;">0%</span>
+        </div>
+        <div class="bar-bg"><div id="bar"></div></div>
+    </div>
+</div>
+
+<script>
+    const { createFFmpeg, fetchFile } = FFmpeg;
+    const ffmpeg = createFFmpeg({
+        log: true,
+        corePath: 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js'
+    });
+
+    const fileInput = document.getElementById('fileInput');
+    const convertBtn = document.getElementById('convertBtn');
+    const bar = document.getElementById('bar');
+    const percentText = document.getElementById('percent');
+
+    fileInput.onchange = (e) => {
+        if(e.target.files[0]) document.getElementById('fileInfo').innerText = "✅ " + e.target.files[0].name.substring(0, 15) + "...";
+    };
+
+    convertBtn.onclick = async () => {
+        const file = fileInput.files[0];
+        if(!file) return alert("Dosya seç!");
+
+        document.getElementById('progressBox').style.display = 'block';
+        convertBtn.disabled = true;
+
+        if(!ffmpeg.isLoaded()) await ffmpeg.load();
+
+        ffmpeg.FS('writeFile', 'input', await fetchFile(file));
+        
+        ffmpeg.setProgress(({ ratio }) => {
+            const p = Math.round(ratio * 100);
+            bar.style.width = p + '%';
+            percentText.innerText = p + '%';
+            document.getElementById('status').innerText = "İŞLENİYOR...";
         });
 
-        const fileInput = document.getElementById('fileInput');
-        const convertBtn = document.getElementById('convertBtn');
-        const bar = document.getElementById('bar');
-        const percentText = document.getElementById('percent');
+        const fmt = document.getElementById('format').value;
+        const q = document.getElementById('quality').value;
+        
+        let args = ['-i', 'input'];
+        if(fmt === 'mp4') args.push('-c:v', 'libx264', '-crf', q, '-preset', 'ultrafast', '-c:a', 'aac');
+        if(fmt === 'webm') args.push('-c:v', 'libaom-av1', '-crf', q, '-b:v', '0', '-preset', '8', '-c:a', 'libopus');
+        if(fmt === 'gif') args.push('-vf', 'fps=10,scale=480:-1:flags=lanczos');
+        if(fmt === 'mp3') args.push('-vn', '-ab', '192k');
+        args.push('output.' + fmt);
 
-        fileInput.addEventListener('change', (e) => {
-            if(e.target.files[0]) {
-                document.getElementById('fileInfo').innerHTML = `<span class="text-blue-400 font-bold">✅ \${e.target.files[0].name.substring(0,20)}...</span>`;
-            }
-        });
+        await ffmpeg.run(...args);
 
-        convertBtn.onclick = async () => {
-            const file = fileInput.files[0];
-            if(!file) return;
-
-            document.getElementById('progressBox').classList.remove('hidden');
-            if(!ffmpeg.isLoaded()) await ffmpeg.load();
-
-            ffmpeg.FS('writeFile', 'in', await fetchFile(file));
-            
-            ffmpeg.setProgress(({ ratio }) => {
-                const p = Math.round(ratio * 100);
-                bar.style.width = p + '%';
-                percentText.innerText = p + '%';
-            });
-
-            const fmt = document.getElementById('format').value;
-            const q = document.getElementById('quality').value;
-            
-            let args = ['-i', 'in'];
-            if(fmt === 'mp4') args.push('-c:v', 'libx264', '-crf', q, '-preset', 'ultrafast', '-c:a', 'aac');
-            if(fmt === 'webm') args.push('-c:v', 'libaom-av1', '-crf', q, '-b:v', '0', '-preset', '8', '-c:a', 'libopus');
-            if(fmt === 'gif') args.push('-vf', 'fps=10,scale=480:-1:flags=lanczos');
-            if(fmt === 'mp3') args.push('-vn', '-ab', '192k');
-            args.push(`out.\${fmt}`);
-
-            await ffmpeg.run(...args);
-
-            const data = ffmpeg.FS('readFile', `out.\${fmt}`);
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(new Blob([data.buffer]));
-            a.download = `MediaMorph_Output.\${fmt}`;
-            a.click();
-            
-            document.getElementById('status').innerText = "BAŞARILI!";
-        };
-    </script>
-</body>
-</html>
-or)...";
-                    await ffmpeg.load();
-                }
-
-                statusText.innerText = "Dosya Belleğe Alınıyor...";
-                ffmpeg.FS('writeFile', 'temp_input', await fetchFile(file));
-
-                // FFmpeg Progress İzleme
-                ffmpeg.setProgress(({ ratio }) => {
-                    const p = Math.round(ratio * 100);
-                    bar.style.width = p + '%';
-                    percentText.innerText = p + '%';
-                    statusText.innerText = "Dönüştürülüyor... S24 İşlemcisi Devrede";
-                });
-
-                // Komut Ayarları
-                let command = ['-i', 'temp_input'];
-                
-                if (targetFormat === 'mp4') {
-                    command.push('-c:v', 'libx264', '-crf', quality, '-preset', 'ultrafast', '-c:a', 'aac');
-                } else if (targetFormat === 'webm') {
-                    // AV1 Sıkıştırma
-                    command.push('-c:v', 'libaom-av1', '-crf', quality, '-b:v', '0', '-preset', '8', '-c:a', 'libopus');
-                } else if (targetFormat === 'gif') {
-                    command.push('-vf', 'fps=10,scale=480:-1:flags=lanczos');
-                } else if (targetFormat === 'mp3') {
-                    command.push('-vn', '-ab', '192k');
-                }
-
-                command.push(`output.${targetFormat}`);
-
-                // Çalıştır
-                await ffmpeg.run(...command);
-
-                statusText.innerText = "Dosya Paketleniyor...";
-                const data = ffmpeg.FS('readFile', `output.${targetFormat}`);
-
-                // İndirme
-                const downloadLink = document.createElement('a');
-                downloadLink.href = URL.createObjectURL(new Blob([data.buffer]));
-                downloadLink.download = `MediaMorph_${Date.now()}.${targetFormat}`;
-                downloadLink.click();
-
-                statusText.innerText = "Tamamlandı! Galeriye Bak.";
-                bar.style.width = '100%';
-                percentText.innerText = '100%';
-
-            } catch (error) {
-                console.error(error);
-                statusText.innerText = "Eyvah! Bir hata oluştu.";
-                alert("Hata: " + error.message);
-            } finally {
-                convertBtn.disabled = false;
-            }
-        };
-
-        convertBtn.addEventListener('click', convert);
-    </script>
+        const data = ffmpeg.FS('readFile', 'output.' + fmt);
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([data.buffer]));
+        a.download = "MediaMorph_" + Date.now() + "." + fmt;
+        a.click();
+        
+        document.getElementById('status').innerText = "TAMAMLANDI!";
+        convertBtn.disabled = false;
+    };
+</script>
 </body>
 </html>
