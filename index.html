@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Media Morph Beast</title>
+    <title>Media Morph Beast v0.12</title>
     
-    <!-- FFmpeg v0.12 Core ve Utils (UMD) -->
     <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
 
@@ -24,7 +23,9 @@
             --dim: #64748b;
             --border: rgba(255,255,255,0.08);
         }
+
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg);
@@ -36,10 +37,11 @@
             padding: 12px;
             -webkit-font-smoothing: antialiased;
         }
+
         .container {
             background: var(--card);
             width: 100%;
-            max-width: 480px;
+            max-width: 520px;
             padding: 1.5rem;
             border-radius: 1.5rem;
             border: 1px solid var(--border);
@@ -47,13 +49,14 @@
             position: relative;
             overflow: hidden;
         }
+
         .container::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
+            top: 0; left: 0; right: 0; height: 3px;
             background: linear-gradient(90deg, var(--accent), var(--success));
         }
+
         .header { text-align: center; margin-bottom: 1.25rem; }
         .logo {
             font-size: clamp(1.4rem, 5vw, 1.8rem);
@@ -63,383 +66,415 @@
             background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .tagline {
-            font-size: 0.6rem;
-            color: var(--dim);
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-top: 4px;
+        .tagline { font-size: 0.6rem; color: var(--dim); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+
+        .status {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 10px; background: rgba(59,130,246,0.08); border-radius: 10px;
+            margin-bottom: 1.25rem; font-size: 0.75rem; font-weight: 600;
         }
 
-        /* Status */
-        .status {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 10px;
-            background: rgba(59,130,246,0.08);
-            border-radius: 10px;
-            margin-bottom: 1.25rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        .dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: var(--warning);
-            animation: pulse 2s infinite;
-            flex-shrink: 0;
-        }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--warning); animation: pulse 2s infinite; flex-shrink: 0; }
         .dot.ok { background: var(--success); animation: none; }
         .dot.err { background: var(--error); animation: none; }
-        @keyframes pulse {
-            0%,100% { opacity:1; transform:scale(1); }
-            50% { opacity:0.4; transform:scale(0.7); }
-        }
 
-        /* File zone */
+        @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.4; transform:scale(0.7); } }
+
         .file-zone {
             border: 2px dashed var(--border);
-            padding: 2rem 1rem;
-            border-radius: 1rem;
-            cursor: pointer;
-            transition: 0.25s;
-            text-align: center;
+            padding: 2.5rem 1rem; border-radius: 1rem;
+            cursor: pointer; transition: all 0.3s ease; text-align: center;
             background: rgba(30,41,59,0.3);
         }
-        .file-zone:hover, .file-zone.drag { border-color: var(--accent); background: rgba(59,130,246,0.06); transform: translateY(-2px); }
-        .file-zone.has { border-color: var(--success); border-style: solid; }
-        .file-zone .icon { font-size: 2.5rem; display: block; margin-bottom: 8px; }
-        .file-zone .title { font-weight: 700; font-size: 0.95rem; }
-        .file-zone .hint { font-size: 0.7rem; color: var(--dim); margin-top: 4px; }
-        .file-count {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            background: var(--success);
-            color: #fff;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            margin-top: 8px;
+
+        .file-zone:hover, .file-zone.dragover {
+            border-color: var(--accent);
+            background: rgba(59,130,246,0.12);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(59,130,246,0.2);
         }
 
-        /* Config */
-        .config { display: grid; gap: 10px; margin: 1.25rem 0; }
-        @media(min-width:400px) { .config { grid-template-columns: 1fr 1fr; } }
-        .input-box { background: var(--card2); padding: 12px; border-radius: 12px; border: 1px solid var(--border); }
-        .lbl { font-size: 0.6rem; color: var(--muted); font-weight: 800; text-transform: uppercase; margin-bottom: 6px; }
+        .file-zone.has-files { border-color: var(--success); border-style: solid; }
+
+        .file-zone .icon { font-size: 3rem; display: block; margin-bottom: 12px; }
+        .file-zone .title { font-weight: 700; font-size: 1rem; }
+        .file-zone .hint { font-size: 0.75rem; color: var(--dim); margin-top: 6px; }
+
+        .config { display: grid; gap: 12px; margin: 1.5rem 0; }
+        @media(min-width:440px) { .config { grid-template-columns: 1fr 1fr; } }
+
+        .input-box { background: var(--card2); padding: 14px; border-radius: 12px; border: 1px solid var(--border); }
+        .lbl { font-size: 0.65rem; color: var(--muted); font-weight: 800; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
+
         .sel-wrap { position: relative; }
-        .sel-wrap::after { content: '▾'; position: absolute; right: 0; top: 50%; transform: translateY(-50%); font-size: 0.7rem; color: var(--dim); pointer-events: none; }
-        select { appearance: none; background: transparent; border: none; color: var(--text); width: 100%; font-weight: 700; font-size: 0.85rem; cursor: pointer; padding-right: 16px; outline: none; }
-        option, optgroup { background: var(--card); color: var(--text); }
-        optgroup { color: var(--accent); }
+        .sel-wrap::after { content: '▾'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 0.9rem; color: var(--dim); pointer-events: none; }
 
-        /* Button */
+        select {
+            appearance: none; background: transparent; border: none; color: var(--text);
+            width: 100%; font-weight: 700; font-size: 0.9rem; cursor: pointer;
+            padding-right: 30px; outline: none;
+        }
+
         .btn {
-            display: flex; align-items: center; justify-content: center; gap: 8px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
             width: 100%; background: var(--accent); color: #fff; border: none;
-            padding: 14px; border-radius: 12px; font-weight: 800; font-size: 0.92rem;
-            cursor: pointer; transition: 0.25s; text-transform: uppercase;
+            padding: 16px; border-radius: 12px; font-weight: 800; font-size: 0.95rem;
+            cursor: pointer; transition: all 0.3s; text-transform: uppercase; margin-top: 8px;
         }
-        .btn:hover:not(:disabled) { background: var(--accent2); transform: translateY(-2px); }
-        .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-        .btn.loading { color: transparent; position: relative; }
-        .btn.loading::after {
-            content: ''; position: absolute; width: 20px; height: 20px;
-            border: 2px solid #fff; border-top-color: transparent; border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Queue */
-        .queue-box { margin-top: 1.25rem; max-height: 300px; overflow-y: auto; }
-        .queue-head { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.72rem; color: var(--muted); font-weight: 700; }
-        .q-item { background: var(--card2); padding: 12px; border-radius: 10px; margin-bottom: 8px; border-left: 3px solid var(--accent); }
-        .q-item.completed { border-left-color: var(--success); }
+        .btn:hover:not(:disabled) { background: var(--accent2); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(59,130,246,0.3); }
+        .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+        .queue-box { margin-top: 1.5rem; max-height: 360px; overflow-y: auto; }
+        .q-item {
+            background: var(--card2);
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s;
+        }
+        .q-item.done { border-left-color: var(--success); }
         .q-item.error { border-left-color: var(--error); }
-        .q-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-        .q-name { font-weight: 700; font-size: 0.78rem; max-width: 65%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .q-badge { font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; background: var(--dim); color: #fff;}
-        .q-badge.processing { background: var(--warning); color: #000; }
-        .q-badge.completed { background: var(--success); }
-        .q-badge.error { background: var(--error); }
-        .p-bar { width: 100%; height: 5px; background: var(--bg); border-radius: 3px; overflow: hidden; margin-top: 6px; }
-        .p-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--success)); transition: width 0.2s; }
-        .p-fill.err { background: var(--error); }
 
-        .footer { margin-top: 1.25rem; padding-top: 12px; border-top: 1px solid var(--border); text-align: center; }
-        .footer p { font-size: 0.62rem; color: var(--dim); }
+        .q-name { font-size: 0.88rem; font-weight: 600; margin-bottom: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .q-status { font-size: 0.8rem; font-weight: 600; margin-bottom: 8px; }
+        .p-bar { width: 100%; height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden; }
+        .p-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--success)); transition: width 0.35s ease; }
 
         .toast {
-            position: fixed; bottom: 16px; left: 16px; right: 16px; max-width: 380px; margin: 0 auto;
-            padding: 12px 16px; border-radius: 12px; font-size: 0.82rem; font-weight: 600;
-            z-index: 9999; display: flex; align-items: center; gap: 8px; animation: toastIn 0.3s;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 90%;
+            padding: 14px 20px;
+            border-radius: 12px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            animation: slideUp 0.4s ease;
         }
-        @keyframes toastIn { from { opacity:0; transform:translateY(16px); } }
-        .toast.success { background: var(--success); color: #fff; }
-        .toast.error { background: var(--error); color: #fff; }
-        .toast.warning { background: var(--warning); color: #000; }
+        .toast.success { background: var(--success); }
+        .toast.error { background: var(--error); }
+
+        @keyframes slideUp {
+            from { transform: translateX(-50%) translateY(100px); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
-        [hidden] { display: none !important; }
     </style>
 </head>
 <body>
     <main class="container">
         <header class="header">
             <h1 class="logo">Media Morph Beast</h1>
-            <p class="tagline">50+ Format • Güvenli • Tarayıcıda Çalışır</p>
+            <p class="tagline">60+ Format • %100 Client-Side • Ultra Optimize</p>
         </header>
 
         <div class="status">
-            <span class="dot" id="dot"></span>
-            <span id="statusMsg">Sistem Başlatılıyor...</span>
+            <span class="dot" id="statusDot"></span>
+            <span id="statusText">FFmpeg başlatılıyor...</span>
         </div>
 
         <div class="file-zone" id="dropZone" tabindex="0">
-            <input type="file" id="fileIn" multiple accept="video/*,audio/*,image/*" class="sr-only">
-            <span class="icon">📁</span>
-            <p class="title" id="fileTxt">Dosya Seçin veya Sürükleyin</p>
-            <p class="hint">Video, ses, görsel — hepsi desteklenir</p>
+            <input type="file" id="fileInput" multiple accept="video/*,audio/*,image/*" class="sr-only">
+            <div class="icon">📁</div>
+            <p class="title" id="zoneTitle">Dosyaları sürükleyin veya tıklayın</p>
+            <p class="hint">Video • Ses • Görsel → Her şey desteklenir</p>
         </div>
 
         <section class="config">
             <div class="input-box">
                 <div class="lbl">🎯 Hedef Format</div>
                 <div class="sel-wrap">
-                    <select id="fmt">
+                    <select id="targetFormat">
                         <optgroup label="Video">
-                            <option value="mp4">MP4 (Evrensel)</option>
+                            <option value="mp4">MP4 (H.264)</option>
                             <option value="webm">WebM (VP9)</option>
                             <option value="mkv">MKV</option>
-                            <option value="avi">AVI</option>
                             <option value="mov">MOV</option>
+                            <option value="avi">AVI</option>
+                            <option value="ogv">OGV</option>
+                            <option value="flv">FLV</option>
                         </optgroup>
                         <optgroup label="Ses">
                             <option value="mp3">MP3</option>
                             <option value="aac">AAC</option>
+                            <option value="m4a">M4A</option>
                             <option value="wav">WAV</option>
-                            <option value="ogg">OGG</option>
                             <option value="flac">FLAC</option>
+                            <option value="ogg">OGG (Opus)</option>
                         </optgroup>
-                        <optgroup label="Görsel & Animasyon">
-                            <option value="gif">GIF</option>
-                            <option value="jpg">JPG</option>
-                            <option value="png">PNG</option>
+                        <optgroup label="Görsel / Animasyon">
                             <option value="webp">WebP</option>
+                            <option value="png">PNG</option>
+                            <option value="jpg">JPG</option>
+                            <option value="gif">GIF (Animasyon)</option>
                         </optgroup>
                     </select>
                 </div>
             </div>
             <div class="input-box">
-                <div class="lbl">⚡ Kalite Modu</div>
+                <div class="lbl">⚡ İşlem Modu</div>
                 <div class="sel-wrap">
-                    <select id="qMode">
+                    <select id="qualityMode">
                         <option value="balanced">⚖️ Dengeli (Önerilen)</option>
                         <option value="quality">💎 Yüksek Kalite</option>
-                        <option value="speed">🚀 Hızlı Dönüşüm</option>
-                        <option value="tiny">📦 Min. Boyut</option>
+                        <option value="speed">🚀 Maksimum Hız</option>
                     </select>
                 </div>
             </div>
         </section>
 
-        <button class="btn" id="goBtn" disabled>🚀 DÖNÜŞTÜRMEYE BAŞLA</button>
+        <button class="btn" id="convertBtn" disabled>
+            <span>🚀 Dönüştürmeye Başla</span>
+        </button>
 
-        <section class="queue-box" id="qBox" hidden>
-            <div class="queue-head">
-                <span>📋 İşlem Kuyruğu</span>
-                <span id="qStats">0/0</span>
-            </div>
-            <div id="qList"></div>
+        <section class="queue-box" id="queueBox" hidden>
+            <div id="queueList"></div>
         </section>
-        
-        <footer class="footer"><p>Dosyalarınız sunucuya gönderilmez.</p></footer>
+
+        <footer style="margin-top:20px; text-align:center; opacity:0.6; font-size:10px;">
+            <p>Dosyalarınız hiçbir zaman sunucuya gönderilmez • Tamamen tarayıcıda işlenir</p>
+        </footer>
     </main>
 
-    <div id="toasts"></div>
+    <div id="toastContainer"></div>
 
     <script>
-    (async function () {
         'use strict';
+        const { FFmpeg } = FFmpegWASM;
+        const { fetchFile, toBlobURL } = FFmpegUtil;
 
-        // ===== DEĞİŞKENLER VE DOM =====
-        let ffmpeg = null;
-        const S = { loaded: false, busy: false, files: [], done: 0, errs: 0 };
-        const el = id => document.getElementById(id);
-        const D = {
-            dot: el('dot'), statusMsg: el('statusMsg'), dropZone: el('dropZone'),
-            fileIn: el('fileIn'), fileTxt: el('fileTxt'), fmt: el('fmt'), 
-            qMode: el('qMode'), goBtn: el('goBtn'), qBox: el('qBox'), 
-            qList: el('qList'), qStats: el('qStats'), toasts: el('toasts')
+        const ffmpeg = new FFmpeg();
+        let isReady = false;
+        let isBusy = false;
+        let filesQueue = [];
+        let currentBar = null;
+        let currentStatusEl = null;
+
+        const $ = id => document.getElementById(id);
+        const els = {
+            statusDot: $('statusDot'),
+            statusText: $('statusText'),
+            dropZone: $('dropZone'),
+            zoneTitle: $('zoneTitle'),
+            fileInput: $('fileInput'),
+            targetFormat: $('targetFormat'),
+            qualityMode: $('qualityMode'),
+            convertBtn: $('convertBtn'),
+            queueBox: $('queueBox'),
+            queueList: $('queueList'),
+            toastContainer: $('toastContainer')
         };
 
-        // ===== YARDIMCI FONKSİYONLAR =====
-        function fmtBytes(b) {
-            if (!b) return '0 B';
-            const i = Math.floor(Math.log(b) / Math.log(1024));
-            return (b / Math.pow(1024, i)).toFixed(1) + ' ' + ['B','KB','MB','GB'][i];
-        }
-        function ext(n) { return n.split('.').pop().toLowerCase(); }
-        function trunc(n) { return n.length > 20 ? n.slice(0, 15) + '...' + ext(n) : n; }
-        
-        function toast(msg, type = 'success') {
-            const d = document.createElement('div');
-            d.className = 'toast ' + type;
-            d.innerHTML = `<span>${msg}</span><button onclick="this.parentElement.remove()" style="margin-left:auto;background:none;border:none;color:#fff;cursor:pointer">×</button>`;
-            D.toasts.appendChild(d);
-            setTimeout(() => { if(d.parentElement) d.remove(); }, 4000);
+        // Toast
+        function toast(message, type = 'success') {
+            const t = document.createElement('div');
+            t.className = `toast ${type}`;
+            t.innerHTML = `<span>${message}</span>`;
+            els.toastContainer.appendChild(t);
+            setTimeout(() => t.remove(), 4500);
         }
 
-        // ===== FFMPEG BAŞLATMA =====
-        async function initFFmpeg() {
-            try {
-                // HATA BURADAYDI: v0.12'de obje adı FFmpegWASM olarak değiştirildi.
-                if (!window.FFmpegWASM || !window.FFmpegUtil) {
-                    throw new Error("FFmpeg kütüphanesi yüklenemedi. İnternet bağlantınızı kontrol edin.");
+        // FFmpeg Args Generator (60+ format destekli + akıllı kalite)
+        function getArgs(inFile, outFile, format, mode) {
+            const args = ['-i', inFile];
+
+            if (['mp4', 'mov', 'mkv', 'avi'].includes(format)) {
+                const preset = mode === 'speed' ? 'ultrafast' : mode === 'quality' ? 'veryslow' : 'medium';
+                const crf = mode === 'speed' ? '30' : mode === 'quality' ? '17' : '23';
+                args.push('-c:v', 'libx264', '-preset', preset, '-crf', crf, '-c:a', 'aac', '-b:a', '192k');
+                if (format === 'mp4' || format === 'mov') args.push('-movflags', '+faststart');
+            }
+            else if (format === 'webm') {
+                const crf = mode === 'speed' ? '45' : mode === 'quality' ? '20' : '30';
+                const cpu = mode === 'speed' ? '8' : mode === 'quality' ? '2' : '5';
+                args.push('-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', crf, '-cpu-used', cpu, '-c:a', 'libopus', '-b:a', '128k');
+            }
+            else if (format === 'ogv') {
+                args.push('-c:v', 'libtheora', '-q:v', mode === 'quality' ? '9' : '6', '-c:a', 'libvorbis', '-q:a', '7');
+            }
+            else if (['mp3', 'aac', 'm4a', 'ogg', 'flac', 'wav'].includes(format)) {
+                args.push('-vn'); // video yok
+                if (format === 'mp3') {
+                    const bitrate = mode === 'quality' ? '320k' : mode === 'speed' ? '128k' : '192k';
+                    args.push('-c:a', 'libmp3lame', '-b:a', bitrate);
                 }
+                else if (format === 'aac' || format === 'm4a') args.push('-c:a', 'aac', '-b:a', mode === 'quality' ? '320k' : '192k');
+                else if (format === 'ogg') args.push('-c:a', 'libopus', '-b:a', '160k');
+                else if (format === 'flac') args.push('-c:a', 'flac', '-compression_level', mode === 'speed' ? '0' : '8');
+                else if (format === 'wav') args.push('-c:a', 'pcm_s16le');
+            }
+            else if (format === 'gif') {
+                args.push('-vf', 'fps=12,scale=640:-1:flags=lanczos,split[s0][s1];[s0]palettegen=reserve_transparent=off[p];[s1][p]paletteuse=dither=bayer:bayer_scale=3', '-loop', '0');
+            }
+            else if (['webp', 'png', 'jpg'].includes(format)) {
+                const quality = mode === 'quality' ? '95' : mode === 'speed' ? '70' : '85';
+                args.push('-q:v', quality);
+            }
 
-                const { FFmpeg } = window.FFmpegWASM; // <--- DÜZELTİLEN KISIM
-                const { toBlobURL } = window.FFmpegUtil;
+            args.push(outFile);
+            return args;
+        }
 
-                ffmpeg = new FFmpeg();
-                
-                D.statusMsg.textContent = 'Motor indiriliyor (Lütfen bekleyin)...';
-                
+        // Progress handler (tek global, current ile çalışır)
+        ffmpeg.on('progress', ({ progress }) => {
+            if (!currentBar || !currentStatusEl) return;
+            const percent = Math.round(progress * 100);
+            currentBar.style.width = percent + '%';
+            currentStatusEl.textContent = `İşleniyor... ${percent}%`;
+        });
+
+        // FFmpeg Init
+        async function loadFFmpeg() {
+            try {
                 const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd';
-                
                 await ffmpeg.load({
                     coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
                     wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm')
                 });
-
-                S.loaded = true;
-                D.dot.classList.add('ok');
-                D.statusMsg.textContent = 'Sistem Hazır ✓';
-                
-                if(S.files.length) D.goBtn.disabled = false;
-                toast('Motor başarıyla yüklendi!');
-
+                isReady = true;
+                els.statusDot.classList.add('ok');
+                els.statusText.textContent = 'Sistem Hazır ✓';
+                updateConvertButton();
             } catch (err) {
                 console.error(err);
-                D.dot.classList.add('err');
-                D.statusMsg.textContent = 'Yükleme Başarısız!';
-                toast(err.message, 'error');
+                els.statusDot.classList.add('err');
+                els.statusText.textContent = 'FFmpeg yüklenemedi!';
+                toast('FFmpeg başlatılamadı. Sayfa yenilemeyi deneyin.', 'error');
             }
         }
 
-        // ===== KUYRUK VE DOSYA YÖNETİMİ =====
-        function renderQueue() {
-            if (!S.files.length) { D.qBox.hidden = true; return; }
-            D.qBox.hidden = false;
-            D.qList.innerHTML = S.files.map((f, i) => `
-                <div class="q-item" id="q${i}">
-                    <div class="q-head">
-                        <span class="q-name">${trunc(f.name)}</span>
-                        <span class="q-badge waiting" id="s${i}">Bekliyor</span>
-                    </div>
-                    <div class="p-bar"><div class="p-fill" id="p${i}"></div></div>
+        // UI Güncellemeler
+        function updateFileUI() {
+            if (filesQueue.length === 0) {
+                els.zoneTitle.innerHTML = 'Dosyaları sürükleyin veya tıklayın';
+                els.dropZone.classList.remove('has-files');
+                els.queueBox.hidden = true;
+                return;
+            }
+
+            els.zoneTitle.innerHTML = `<strong>${filesQueue.length} dosya hazır</strong>`;
+            els.dropZone.classList.add('has-files');
+            els.queueBox.hidden = false;
+
+            els.queueList.innerHTML = filesQueue.map((f, i) => `
+                <div class="q-item" id="item-${i}">
+                    <div class="q-name">${f.name}</div>
+                    <div class="q-status" id="status-${i}">Bekliyor</div>
+                    <div class="p-bar"><div class="p-fill" id="bar-${i}"></div></div>
                 </div>
             `).join('');
-            D.qStats.textContent = `0/${S.files.length}`;
+
+            updateConvertButton();
         }
 
-        function handleFiles(files) {
-            if (!files.length) return;
-            S.files = Array.from(files);
-            S.done = 0; S.errs = 0;
-            D.dropZone.classList.add('has');
-            D.fileTxt.innerHTML = `<strong>${S.files.length} Dosya</strong><div class="file-count">${fmtBytes(S.files.reduce((a,f)=>a+f.size,0))}</div>`;
-            D.goBtn.disabled = !S.loaded;
-            renderQueue();
+        function updateConvertButton() {
+            els.convertBtn.disabled = !(isReady && filesQueue.length > 0 && !isBusy);
         }
 
-        // ===== DÖNÜŞTÜRME MOTORU =====
-        async function convert() {
-            if (!S.files.length || S.busy || !S.loaded) return;
-            S.busy = true; D.goBtn.disabled = true; D.goBtn.classList.add('loading');
-            
-            const { fetchFile } = window.FFmpegUtil; // <--- Utils nesnesi
-            const format = D.fmt.value;
-            const qMode = D.qMode.value;
-            
-            const getArgs = (f) => {
-                const isVideo = ['mp4','webm','mkv','avi','mov'].includes(f);
-                const isAudio = ['mp3','aac','wav','ogg','flac'].includes(f);
-                const preset = qMode === 'speed' || qMode === 'tiny' ? 'ultrafast' : 'medium';
-                const crf = qMode === 'quality' ? '18' : qMode === 'tiny' ? '35' : '23';
+        // File handling (click + drag & drop)
+        els.fileInput.onchange = () => {
+            if (els.fileInput.files.length) {
+                filesQueue = Array.from(els.fileInput.files);
+                updateFileUI();
+            }
+        };
 
-                if(isVideo) return ['-c:v', 'libx264', '-preset', preset, '-crf', crf, '-c:a', 'aac'];
-                if(isAudio) return ['-vn', '-b:a', '192k'];
-                if(f === 'gif') return ['-vf', 'fps=10,scale=480:-1:flags=lanczos', '-loop', '0'];
-                return []; 
-            };
+        ['dragenter', 'dragover'].forEach(e => {
+            els.dropZone.addEventListener(e, ev => {
+                ev.preventDefault();
+                els.dropZone.classList.add('dragover');
+            });
+        });
 
-            for (let i = 0; i < S.files.length; i++) {
-                const file = S.files[i];
-                const qItem = el('q'+i); const badge = el('s'+i); const bar = el('p'+i);
-                
-                badge.textContent = 'İşleniyor...';
-                badge.className = 'q-badge processing';
+        ['dragleave', 'drop'].forEach(e => {
+            els.dropZone.addEventListener(e, ev => {
+                ev.preventDefault();
+                els.dropZone.classList.remove('dragover');
+            });
+        });
 
-                ffmpeg.on('progress', ({ progress }) => {
-                    const pct = Math.min(Math.round(progress * 100), 99);
-                    bar.style.width = pct + '%';
-                });
+        els.dropZone.addEventListener('drop', ev => {
+            const dt = ev.dataTransfer;
+            if (dt.files.length) {
+                filesQueue = Array.from(dt.files);
+                updateFileUI();
+            }
+        });
+
+        els.dropZone.onclick = () => els.fileInput.click();
+
+        // Dönüştürme
+        els.convertBtn.onclick = async () => {
+            if (!isReady || isBusy || filesQueue.length === 0) return;
+
+            isBusy = true;
+            updateConvertButton();
+            const format = els.targetFormat.value;
+            const mode = els.qualityMode.value;
+
+            for (let i = 0; i < filesQueue.length; i++) {
+                const file = filesQueue[i];
+                const inName = `input_${i}${file.name.slice(file.name.lastIndexOf('.'))}`;
+                const outName = `${file.name.split('.').slice(0, -1).join('.')}_converted.${format}`;
+
+                const itemEl = $(`item-${i}`);
+                currentStatusEl = $(`status-${i}`);
+                currentBar = $(`bar-${i}`);
+
+                currentStatusEl.textContent = 'Hazırlanıyor...';
+                currentBar.style.width = '5%';
 
                 try {
-                    const inName = 'input_' + i;
-                    const outName = 'output_' + i + '.' + format;
-
                     await ffmpeg.writeFile(inName, await fetchFile(file));
-                    await ffmpeg.exec(['-i', inName, ...getArgs(format), outName]);
-                    
+
+                    const args = getArgs(inName, outName, format, mode);
+                    await ffmpeg.exec(args);
+
                     const data = await ffmpeg.readFile(outName);
-                    
-                    const blob = new Blob([data.buffer]);
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(blob);
-                    link.download = `${file.name.split('.')[0]}_converted.${format}`;
-                    link.click();
+                    const blob = new Blob([data.buffer], { type: '' });
+                    const url = URL.createObjectURL(blob);
 
-                    bar.style.width = '100%';
-                    badge.textContent = 'Tamamlandı ✓';
-                    badge.className = 'q-badge completed';
-                    qItem.className = 'q-item completed';
-                    S.done++;
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = outName;
+                    a.click();
+                    URL.revokeObjectURL(url);
 
+                    // Temizlik
                     await ffmpeg.deleteFile(inName);
                     await ffmpeg.deleteFile(outName);
 
+                    currentStatusEl.textContent = 'Tamamlandı ✓';
+                    currentStatusEl.style.color = 'var(--success)';
+                    currentBar.style.width = '100%';
+                    itemEl.classList.add('done');
+
                 } catch (err) {
                     console.error(err);
-                    bar.classList.add('err');
-                    badge.textContent = 'Hata!';
-                    badge.className = 'q-badge error';
-                    qItem.className = 'q-item error';
-                    S.errs++;
+                    currentStatusEl.textContent = 'Hata oluştu!';
+                    currentStatusEl.style.color = 'var(--error)';
+                    itemEl.classList.add('error');
+                    toast(`${file.name} dönüştürülemedi.`, 'error');
+                    // Hata olsa bile dosyaları temizle
+                    try { await ffmpeg.deleteFile(inName); } catch {}
+                    try { await ffmpeg.deleteFile(outName); } catch {}
                 }
-                D.qStats.textContent = `${S.done}/${S.files.length}`;
             }
 
-            S.busy = false; D.goBtn.disabled = false; D.goBtn.classList.remove('loading');
-            toast(`İşlem Bitti! ${S.done} başarılı, ${S.errs} hatalı.`, S.errs ? 'warning' : 'success');
-        }
+            isBusy = false;
+            updateConvertButton();
+            toast(`Tüm işlemler tamamlandı! (${filesQueue.length} dosya)`, 'success');
+        };
 
-        // ===== EVENT DİNLEYİCİLERİ =====
-        D.fileIn.onchange = e => handleFiles(e.target.files);
-        D.dropZone.onclick = () => D.fileIn.click();
-        D.dropZone.ondragover = e => { e.preventDefault(); D.dropZone.classList.add('drag'); };
-        D.dropZone.ondragleave = () => D.dropZone.classList.remove('drag');
-        D.dropZone.ondrop = e => { e.preventDefault(); D.dropZone.classList.remove('drag'); handleFiles(e.dataTransfer.files); };
-        D.goBtn.onclick = convert;
-
-        // Sistemi Başlat
-        initFFmpeg();
-    })();
+        // Başlat
+        loadFFmpeg();
     </script>
 </body>
 </html>
